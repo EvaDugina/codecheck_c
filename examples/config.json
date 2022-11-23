@@ -1,0 +1,107 @@
+{
+    "enabled": true,
+    "show_to_student": false,
+    "tools": {
+        "valgrind": {
+            "bin": "valgrind",
+            "compiler": "gcc",
+            "checks": [
+                {
+                    "check": "errors",
+                    "limit": 0,
+                    "reject": true
+                },
+                {
+                    "check": "leaks",
+                    "limit": 0,
+                    "reject": true
+                }
+            ]
+        },
+        "cppcheck": {
+            "bin": "cppcheck",
+            "checks": [
+                {
+                    "check": "error",
+                    "limit": 0,
+                    "reject": false
+                },
+                {
+                    "check": "warning",
+                    "limit": 3,
+                    "reject": false
+                },
+                {
+                    "check": "style",
+                    "limit": 3,
+                    "reject": false
+                },
+                {
+                    "check": "performance",
+                    "limit": 2,
+                    "reject": false
+                },
+                {
+                    "check": "portability",
+                    "limit": 0,
+                    "reject": false
+                },
+                {
+                    "check": "information",
+                    "limit": 0,
+                    "reject": false
+                },
+                {
+                    "check": "unusedFunction",
+                    "limit": 0,
+                    "reject": false
+                },
+                {
+                    "check": "missingInclude",
+                    "limit": 0,
+                    "reject": false
+                }
+            ]
+        },
+        "clang-format": {
+            "bin": "clang-format",
+            "checks": [
+                {
+                    "check": "strict",
+                    "limit": 3,
+                    "reject": true
+                },
+                {
+                    "check": "less",
+                    "limit": 3,
+                    "reject": true
+                },
+                {
+                    "check": "minimal",
+                    "limit": 3,
+                    "reject": true
+                }
+            ]
+        },
+        "copydetect": {
+            "bin": "copydetect",
+            "checks": [
+                {
+                    "check": "with_all",
+                    "limit": 50,
+                    "reject": true
+                },
+                {
+                    "check": "same_group",
+                    "limit": 50,
+                    "reject": true
+                },
+                {
+                    "check": "same_subgroup",
+                    "limit": 50,
+                    "reject": true
+                }
+            ]
+        }
+    }
+}

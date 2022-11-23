@@ -1,0 +1,59 @@
+{
+    "enabled": true,
+    "show_to_student": false,
+    "tools": {
+        "cppcheck": {
+            "bin": "cppcheck",
+            "checks": [
+                {
+                    "check": "error",
+                    "limit": 0,
+                    "reject": false,
+                    "result": 1
+                },
+                {
+                    "check": "warning",
+                    "limit": 3,
+                    "reject": false,
+                    "result": 0
+                },
+                {
+                    "check": "style",
+                    "limit": 3,
+                    "reject": false,
+                    "result": 3
+                },
+                {
+                    "check": "performance",
+                    "limit": 2,
+                    "reject": false,
+                    "result": 0
+                },
+                {
+                    "check": "portability",
+                    "limit": 0,
+                    "reject": false,
+                    "result": 0
+                },
+                {
+                    "check": "information",
+                    "limit": 0,
+                    "reject": false,
+                    "result": 1
+                },
+                {
+                    "check": "unusedFunction",
+                    "limit": 0,
+                    "reject": false,
+                    "result": 0
+                },
+                {
+                    "check": "missingInclude",
+                    "limit": 0,
+                    "reject": false,
+                    "result": 0
+                }
+            ]
+        }
+    }
+}
