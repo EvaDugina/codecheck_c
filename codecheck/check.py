@@ -39,6 +39,8 @@ def run_tools():
         json.dump(data, outfile, indent=4)
 
 def test_valgrind():
+    if not data['tools']['valgrind']:
+        return
     print('Running valgrind check...')
     enabled_types = []
     for c in data['tools']['valgrind']['checks']:
@@ -68,6 +70,8 @@ def test_valgrind():
     print('Valgrind checked')
 
 def test_cppcheck():
+    if not data['tools']['cppcheck']:
+        return
     print('Running cppcheck...')
     enabled_types = []
     for c in data['tools']['cppcheck']['checks']:
@@ -102,6 +106,8 @@ def test_cppcheck():
     print("Cppcheck checked")
 
 def test_clang_format():
+    if not data['tools']['clang-format']:
+        return
     # clang-format до версии 14 не поддерживает указание конкретного файла формата,
     # поэтому нужно размещать файл с форматом с названием .clang-format на одном уровне с исходниками
     print("Running clang-format...")
