@@ -4,25 +4,13 @@ import check
 def main():
     parser = argparse.ArgumentParser(prog="codecheck",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-e", "--example", action="store_true",
-                        help="example run without command line arguments")
+    parser.add_argument("files", metavar="files", nargs="+",
+                    help="paths to test files to check")
     parser.add_argument("-c", "--conf", metavar="config.json",
-                        help="path to JSON configuration file")
-    parser.add_argument("-t", "--test", metavar="main.c", nargs="+",
-                        help="paths to test files to check")
+                        help="path to JSON configuration file", required=True)
     parser.add_argument("-f", "--format", metavar=".clang-format",
                         help="path to clang-format configuration")
     args = parser.parse_args()
-
-    if args.example:
-        print("Running example case:")
-        config = {
-            "json_path" : '../examples/config.json',
-            "check_files" : ["../examples/code_example.c"],
-            "clang_format" : '../guidelines/strict.clang-format'
-        }
-        check.parse_configuration(config)
-        return
 
     if not args.conf:
         parser.error("path to configuration json file must be provided"
@@ -36,6 +24,14 @@ def main():
         'check_files' : args.test,
         'clang_format' : args.format
     }
+
+    # Uncomment code below and comment code above to test without cl args
+    # config = {
+    #     "json_path" : '../examples/config.json',
+    #     "check_files" : ["../examples/code_example.c"],
+    #     "clang_format" : '../guidelines/strict.clang-format'
+    # }
+
     check.parse_configuration(config)
     
 
