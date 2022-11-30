@@ -65,43 +65,23 @@
         },
         "clang-format": {
             "bin": "clang-format",
-            "checks": [
-                {
-                    "check": "strict",
-                    "limit": 3,
-                    "reject": true
-                },
-                {
-                    "check": "less",
-                    "limit": 3,
-                    "reject": true
-                },
-                {
-                    "check": "minimal",
-                    "limit": 3,
-                    "reject": true
-                }
-            ]
+            "check": {
+                "name": "strict",
+                ".comment": "can be diffrent checks, such as strict, less, minimal and so on",
+                "file": ".clang-format",
+                "limit": 5,
+                "reject": true
+            }
         },
         "copydetect": {
             "bin": "copydetect",
-            "checks": [
-                {
-                    "check": "with_all",
-                    "limit": 50,
-                    "reject": true
-                },
-                {
-                    "check": "same_group",
-                    "limit": 50,
-                    "reject": true
-                },
-                {
-                    "check": "same_subgroup",
-                    "limit": 50,
-                    "reject": true
-                }
-            ]
+            "check": {
+                "type": "with_all",
+                ".comment1": "can be diffrent types, such as with same group/subgroup",
+                "limit": 50,
+                ".comment2": "limit is maximum match percentage",
+                "reject": true
+            }
         }
     }
 }

@@ -2,6 +2,24 @@
     "enabled": true,
     "show_to_student": false,
     "tools": {
+        "valgrind": {
+            "bin": "valgrind",
+            "compiler": "gcc",
+            "checks": [
+                {
+                    "check": "errors",
+                    "limit": 0,
+                    "reject": true,
+                    "result": 0
+                },
+                {
+                    "check": "leaks",
+                    "limit": 0,
+                    "reject": true,
+                    "result": 1
+                }
+            ]
+        },
         "cppcheck": {
             "bin": "cppcheck",
             "checks": [
@@ -54,6 +72,27 @@
                     "result": 0
                 }
             ]
+        },
+        "clang-format": {
+            "bin": "clang-format",
+            "check": {
+                "name": "strict",
+                ".comment": "can be diffrent checks, such as strict, less, minimal and so on",
+                "file": ".clang-format",
+                "limit": 5,
+                "reject": true,
+                "result": 5
+            }
+        },
+        "copydetect": {
+            "bin": "copydetect",
+            "check": {
+                "type": "with_all",
+                ".comment1": "can be diffrent types, such as with same group/subgroup",
+                "limit": 50,
+                ".comment2": "limit is maximum match percentage",
+                "reject": true
+            }
         }
     }
 }
