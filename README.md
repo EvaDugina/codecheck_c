@@ -5,6 +5,11 @@
 - cppcheck
 - clang-format (codestyle)
 - copydetect
+### Install     
+Clone the repository and run command in root directory:
+```
+pip install .
+```
 ### Usage
 ```
 codecheck [-h] -c config.json [-f .clang-format] files [files ...]
