@@ -1,5 +1,5 @@
 import argparse
-import check
+from codecheck import check
 
 def main():
     parser = argparse.ArgumentParser(prog="codecheck",
