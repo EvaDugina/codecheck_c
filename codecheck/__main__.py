@@ -15,13 +15,13 @@ def main():
     if not args.conf:
         parser.error("path to configuration json file must be provided"
                      "specify it with -c or --conf flags")    
-    if not args.test:
-        parser.error("path to test files to check must be provided"
+    if not args.files:
+        parser.error("path to files to check must be provided"
                      "specify it with -t or --test flags")
 
     config = {
         'json_path' : args.conf,
-        'check_files' : args.test,
+        'check_files' : args.files,
         'clang_format' : args.format
     }
 

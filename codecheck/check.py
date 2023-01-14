@@ -35,7 +35,7 @@ def run_tools():
     test_cppcheck()
     test_valgrind()
     test_clang_format()
-    with open('../examples/output.json', 'w') as outfile:
+    with open('output.json', 'w') as outfile:
         json.dump(data, outfile, indent=4)
 
 def test_valgrind():
