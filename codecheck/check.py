@@ -45,7 +45,7 @@ def run_tools():
         json.dump(data, outfile, indent=4)
 
 def test_valgrind():
-    if not data['tools']['valgrind'] or data['tools']['valgrind']['enabled'] == False:
+    if not 'valgrind' in data['tools'] or data['tools']['valgrind']['enabled'] == False:
         return
     print('Running valgrind check...')
     enabled_types = []
@@ -84,7 +84,7 @@ def test_valgrind():
     print('Valgrind checked')
 
 def test_cppcheck():
-    if not data['tools']['cppcheck'] or data['tools']['cppcheck']['enabled'] == False:
+    if not 'cppcheck' in data['tools'] or data['tools']['cppcheck']['enabled'] == False:
         return
     print('Running cppcheck...')
     enabled_types = []
@@ -120,7 +120,7 @@ def test_cppcheck():
     print("Cppcheck checked")
 
 def test_clang_format():
-    if not data['tools']['clang-format'] or data['tools']['clang-format']['enabled'] == False:
+    if not 'clang-format' in data['tools'] or data['tools']['clang-format']['enabled'] == False:
         return
     # clang-format до версии 14 не поддерживает указание конкретного файла формата,
     # поэтому нужно размещать файл с форматом с названием .clang-format на одном уровне с исходниками
@@ -144,7 +144,7 @@ def test_clang_format():
     print('Clang-format checked')
 
 def test_autotests():
-    if not data['tools']['autotests'] or data['tools']['autotests']['enabled'] == False:
+    if not 'autotests' in data['tools'] or data['tools']['autotests']['enabled'] == False:
         return
 
     print("Running autotests...")
@@ -199,7 +199,7 @@ def test_autotests():
     print('Autotests checked')
 
 def test_copydetect():
-    if not data['tools']['copydetect'] or data['tools']['copydetect']['enabled'] == False:
+    if not 'copydetect' in data['tools'] or data['tools']['copydetect']['enabled'] == False:
         return
 
     print("Running copydetect...")
