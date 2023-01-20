@@ -63,7 +63,7 @@ def test_valgrind():
         system(compile_command)
 
     system('valgrind --xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name))    
-    system('valgrind ./{} 2> output_valgrind.txt'.format(test_executable_name))    
+    system('valgrind ./{} > /dev/null 2> output_valgrind.txt'.format(test_executable_name))    
 
     leaks_count = 0
     errors_count = 0
