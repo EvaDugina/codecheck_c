@@ -125,6 +125,7 @@ def test_clang_format():
     # clang-format до версии 14 не поддерживает указание конкретного файла формата,
     # поэтому нужно размещать файл с форматом с названием .clang-format на одном уровне с исходниками
     print("Running clang-format...")
+    copy('/stable/.clang-format', '.')
     command = 'clang-format '
     for file in files:
         command += file
