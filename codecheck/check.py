@@ -2,7 +2,7 @@ import xml.etree.cElementTree as ET  # working with xml
 import json
 from os import system
 import os
-from shutil import which
+from shutil import which, copy, rmtree
 
 test_executable_name = 'test'
 
@@ -40,6 +40,7 @@ def run_tools():
     test_clang_format()
     test_autotests()
     test_valgrind()
+    test_copydetect()
     with open('output.json', 'w') as outfile:
         json.dump(data, outfile, indent=4)
 
@@ -193,3 +194,20 @@ def test_autotests():
     data['tools']['autotests']['check']['failures'] = failures
     data['tools']['autotests']['full_output'] = "output_tests.txt"
     print('Autotests checked')
+
+def test_copydetect():
+    if not data['tools']['copydetect']:
+        return
+
+    print("Running copydetect...")
+
+    os.mkdir('test_directory')
+    for file in files:
+        copy(file, 'test_directory')
+
+    command = 'copydetect -t test_directory -r {} -a -d 0 --out-file \'output_copydetect\''.format(data['tools']['copydetect']['check']['reference_directory'])
+    system(command)
+    rmtree('test_directory')
+    data['tools']['copydetect']['full_output'] = "output_copydetect.html"
+
+    print('Copydetect checked')

@@ -97,9 +97,8 @@
 			"arguments": "",
             "check": {
                 "type": "with_all",
-                ".comment1": "can be diffrent types, such as with same group/subgroup", 
                 "limit": 50,
-                ".comment2": "limit is maximum match percentage", 
+                "reference_directory": "copydetect",
                 "autoreject": true
             }
        },
