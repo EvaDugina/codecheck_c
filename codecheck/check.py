@@ -169,6 +169,8 @@ def test_autotests():
     compile_test += ' -o '
     compile_test += test_executable_name
 
+    compile_test += ' -I /stable'
+
     run_test = './test --reporter junit -o tests_result.xml'
     system(compile_test)
     system(run_test)
