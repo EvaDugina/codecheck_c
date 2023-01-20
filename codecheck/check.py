@@ -4,6 +4,8 @@ from os import system
 import os
 from shutil import which
 
+test_executable_name = 'test'
+
 def write_result(tool, error_type, result):
     for check in data['tools'][tool]['checks']:
         if check['check'] == error_type:
@@ -23,6 +25,8 @@ def parse_configuration(configuration):
 def check_tools():
     deleted_tools = []
     for key, tool in data['tools'].items():
+        if not 'bin' in tool:
+            continue
         if (which(tool['bin']) is None):
             print("Tool " + tool['bin'] + " not installed, skipping..")
             deleted_tools.append(key)
@@ -33,8 +37,9 @@ def check_tools():
 def run_tools():
     print("Running tools..")
     test_cppcheck()
-    test_valgrind()
     test_clang_format()
+    test_autotests()
+    test_valgrind()
     with open('output.json', 'w') as outfile:
         json.dump(data, outfile, indent=4)
 
@@ -45,13 +50,19 @@ def test_valgrind():
     enabled_types = []
     for c in data['tools']['valgrind']['checks']:
         enabled_types.append(c['check'])
-    compile_command = data['tools']['valgrind']['compiler']
-    compile_command += ' '
-    for file in files:
-        compile_command += file
+
+    # if not builded early on autotest stage
+    if not data['tools']['autotests']:
+        compile_command = data['tools']['valgrind']['compiler']
         compile_command += ' '
-    system(compile_command)
-    system('valgrind --xml=yes --xml-file=valgrind.xml ./a.out')
+        for file in files:
+            compile_command += file
+            compile_command += ' '
+        compile_command += '-o '
+        compile_command += test_executable_name
+        system(compile_command)
+
+    system('valgrind --xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name))    
 
     leaks_count = 0
     errors_count = 0
@@ -65,7 +76,7 @@ def test_valgrind():
 
     write_result('valgrind', 'leaks', leaks_count)
     write_result('valgrind', 'errors', errors_count)
-    os.remove('a.out')
+    os.remove(test_executable_name)
     os.remove('valgrind.xml')
     print('Valgrind checked')
 
@@ -128,4 +139,54 @@ def test_clang_format():
     os.remove('format.xml')
     print('Clang-format checked')
 
-    
+def test_autotests():
+    if not data['tools']['autotests']:
+        return
+
+    print("Running autotests...")
+
+    # command = ''
+    # if data['tools']['autotests']['language'] == 'C':
+    #     command = 'gcc -c '
+    # else if data['tools']['autotests']['language'] == 'C++':
+    #     coomand = 'g++ -c '
+
+    command = 'g++ -c '
+
+    for file in files:
+        command += file
+        command += ' '
+
+    system(command)
+
+    compile_test = 'g++ ' + data['tools']['autotests']['test_path'] + ' '
+    for file in files:
+        compile_test += file.split('.')[0] + '.o'
+        compile_test += ' '
+    compile_test += ' -o '
+    compile_test += test_executable_name
+
+    run_test = './test --reporter junit -o tests_result.xml'
+    system(compile_test)
+    system(run_test)
+    system("./test > test_result.txt")
+
+    errors = 0
+    failures = 0
+    for event, elem in ET.iterparse('tests_result.xml'):
+        if elem.tag == 'testsuite':
+            errors += int(elem.get('errors'))
+            failures += int(elem.get('failures'))
+            elem.clear()
+
+    for file in files:
+        os.remove(file.split('.')[0] + '.o')
+
+    os.remove('tests_result.xml')
+
+    if not data['tools']['valgrind']:
+        os.remove(test_executable_name)
+
+    data['tools']['autotests']['check']['errors'] = errors
+    data['tools']['autotests']['check']['failures'] = failures
+    print('Autotests checked')

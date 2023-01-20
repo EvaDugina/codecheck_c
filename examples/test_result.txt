@@ -1,0 +1,30 @@
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+test is a Catch v2.13.10 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+the product of odd digits
+-------------------------------------------------------------------------------
+test_example.cpp:5
+...............................................................................
+
+test_example.cpp:7: FAILED:
+  CHECK( multiplyOdd(1) == 1 )
+with expansion:
+  0 == 1
+
+test_example.cpp:8: FAILED:
+  CHECK( multiplyOdd(456789) == 315 )
+with expansion:
+  0 == 315 (0x13b)
+
+test_example.cpp:9: FAILED:
+  CHECK( multiplyOdd(123) == 3 )
+with expansion:
+  0 == 3
+
+===============================================================================
+test cases: 1 | 1 failed
+assertions: 5 | 2 passed | 3 failed
+
