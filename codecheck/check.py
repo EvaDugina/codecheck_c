@@ -63,6 +63,7 @@ def test_valgrind():
         system(compile_command)
 
     system('valgrind --xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name))    
+    system('valgrind ./{} 2> output_valgrind.txt'.format(test_executable_name))    
 
     leaks_count = 0
     errors_count = 0
@@ -76,6 +77,7 @@ def test_valgrind():
 
     write_result('valgrind', 'leaks', leaks_count)
     write_result('valgrind', 'errors', errors_count)
+    data['tools']['valgrind']['full_output'] = 'output_valgrind.xml'
     os.remove(test_executable_name)
     os.remove('valgrind.xml')
     print('Valgrind checked')
@@ -94,11 +96,11 @@ def test_cppcheck():
         command += ' '
     command += '--enable='
     command += ','.join(enabled_types)
-    command += ' --xml --output-file=cppcheck.xml'
+    command += ' --xml --output-file=output_cppcheck.xml'
     system(command)
 
     errors_count = {}
-    for event, elem in ET.iterparse('cppcheck.xml'):  # incremental parsing
+    for event, elem in ET.iterparse('output_cppcheck.xml'):  # incremental parsing
         if elem.tag == 'error':
             severity = elem.get('severity')
             if errors_count.get(severity) is None:
@@ -113,7 +115,7 @@ def test_cppcheck():
         else:
             c['result'] = 0
 
-    os.remove('cppcheck.xml')
+    data['tools']['cppcheck']['full_output'] = 'output_cppcheck.xml'
     print("Cppcheck checked")
 
 def test_clang_format():
@@ -126,17 +128,17 @@ def test_clang_format():
     for file in files:
         command += file
         command += ' '
-    command += '--style=file --output-replacements-xml > format.xml'
+    command += '--style=file --output-replacements-xml > output_format.xml'
     system(command)
 
     replacements = 0
-    for event, elem in ET.iterparse('format.xml'):
+    for event, elem in ET.iterparse('output_format.xml'):
         if elem.tag == 'replacement':
             replacements += 1
             elem.clear()
     
     data['tools']['clang-format']['check']['result'] = replacements
-    os.remove('format.xml')
+    data['tools']['clang-format']['full_output'] = 'output_format.xml'
     print('Clang-format checked')
 
 def test_autotests():
@@ -169,7 +171,7 @@ def test_autotests():
     run_test = './test --reporter junit -o tests_result.xml'
     system(compile_test)
     system(run_test)
-    system("./test > test_result.txt")
+    system("./test > output_tests.txt")
 
     errors = 0
     failures = 0
@@ -189,4 +191,5 @@ def test_autotests():
 
     data['tools']['autotests']['check']['errors'] = errors
     data['tools']['autotests']['check']['failures'] = failures
+    data['tools']['autotests']['full_output'] = "output_tests.txt"
     print('Autotests checked')
