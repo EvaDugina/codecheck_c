@@ -24,15 +24,19 @@ def parse_configuration(configuration):
     run_tools()
     
 def check_tools():
-    deleted_tools = []
+    # deleted_tools = []
     for key, tool in data['tools'].items():
         if not 'bin' in tool:
             continue
         if (which(tool['bin']) is None):
             print("Tool " + tool['bin'] + " not installed, skipping..")
-            deleted_tools.append(key)
-    for tool in deleted_tools:
-        data['tools'].pop(tool)
+            # deleted_tools.append(key)
+            tool['enabled'] == False
+            tool['outcome'] = 'skip'
+        if (tool['enabled'] == False):
+            tool['outcome'] = 'skip'
+    # for tool in deleted_tools:
+    #     data['tools'].pop(tool)
 
 
 def run_tools():
@@ -76,6 +80,7 @@ def test_build():
     output.write(str(result.stderr))
     output.close()
 
+    data['tools']['build']['outcome'] = 'pass'
     if result.returncode == 0:
         data['tools']['build']['check']['outcome'] = 'pass'
         print("Build checked")
@@ -127,6 +132,7 @@ def test_valgrind():
             val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'fail'
 
     data['tools']['valgrind']['full_output'] = 'output_valgrind.xml'
+    data['tools']['valgrind']['outcome'] = 'pass'
     os.remove(test_executable_name)
     os.remove('valgrind.xml')
     print('Valgrind checked')
@@ -166,6 +172,7 @@ def test_cppcheck():
         c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'fail'
 
     data['tools']['cppcheck']['full_output'] = 'output_cppcheck.xml'
+    data['tools']['cppcheck']['outcome'] = 'pass'
     print("Cppcheck checked")
 
 def test_clang_format():
@@ -191,6 +198,7 @@ def test_clang_format():
     data['tools']['clang-format']['check']['result'] = replacements
     data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
     data['tools']['clang-format']['full_output'] = 'output_format.xml'
+    data['tools']['clang-format']['outcome'] = 'pass'
     print('Clang-format checked')
 
 def test_autotests():
@@ -243,6 +251,7 @@ def test_autotests():
     data['tools']['autotests']['check']['errors'] = errors
     data['tools']['autotests']['check']['failures'] = failures
     data['tools']['autotests']['full_output'] = "output_tests.txt"
+    data['tools']['autotests']['outcome'] = "pass"
     print('Autotests checked')
 
 def test_copydetect():
@@ -261,5 +270,6 @@ def test_copydetect():
     system(command)
     rmtree('test_directory')
     data['tools']['copydetect']['full_output'] = "output_copydetect.html"
+    data['tools']['copydetect']['outcome'] = 'pass'
 
     print('Copydetect checked')
