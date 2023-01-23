@@ -203,6 +203,8 @@ def test_copydetect():
         return
 
     print("Running copydetect...")
+    if os.path.exists('test_directory'):
+        rmtree('test_directory')
 
     os.mkdir('test_directory')
     for file in files:
