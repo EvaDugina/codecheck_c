@@ -2,6 +2,7 @@ import xml.etree.cElementTree as ET  # working with xml
 import json
 from os import system
 import os
+import subprocess
 from shutil import which, copy, rmtree
 
 test_executable_name = 'test'
@@ -36,13 +37,48 @@ def check_tools():
 
 def run_tools():
     print("Running tools..")
+    if test_build():
     test_cppcheck()
     test_clang_format()
     test_autotests()
     test_valgrind()
     test_copydetect()
+    else:
+        print('Code not builded, check failed')
+    
     with open('output.json', 'w') as outfile:
         json.dump(data, outfile, indent=4)
+
+def test_build():
+    print("Running build check...")
+
+    compile_command = ''
+    flags = []
+    if data['language'] == 'C++':
+        compile_command = 'g++'
+        flags.append('-c')
+    elif data['language'] == 'C++':
+        compile_command = 'gcc'
+        flags.append('-c')
+    else:
+        print('Language {} not supported, check failed'.format(data['language']))
+        exit()
+
+    global compiled_files
+    compiled_files = []
+    for file in files:
+        compiled_files.append(file.split('.')[0] + '.o')
+
+    result = subprocess.run([compile_command] + flags + files, stdout=subprocess.PIPE)
+
+    if result.returncode == 0:
+        data['tools']['build']['check']['outcome'] = 'pass'
+        print("Build checked")
+        return True
+    else:
+        data['tools']['build']['check']['outcome'] = 'fail'
+        print("Build checked")
+        return False
 
 def test_valgrind():
     if not 'valgrind' in data['tools'] or data['tools']['valgrind']['enabled'] == False:
@@ -163,14 +199,6 @@ def test_autotests():
     #     command = 'gcc -c '
     # else if data['tools']['autotests']['language'] == 'C++':
     #     coomand = 'g++ -c '
-
-    command = 'g++ -c '
-
-    for file in files:
-        command += file
-        command += ' '
-
-    system(command)
 
     compile_test = 'g++ ' + data['tools']['autotests']['test_path'] + ' '
     for file in files:
