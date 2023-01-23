@@ -6,140 +6,137 @@
             "language": "C++",
             "check": {
                 "autoreject": true,
+                "full_output": "output_build.txt",
                 "outcome": "pass"
-            },
-            "full_output": "output_build.txt"
+            }
         },
         "valgrind": {
-			"enabled": true,
-			"show_to_student": false,
+            "enabled": true,
+            "show_to_student": false,
             "bin": "valgrind",
-			"arguments": "",
+            "arguments": "",
             "compiler": "gcc",
             "checks": [
                 {
                     "check": "errors",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": true,
                     "result": 0,
-					"outcome": "pass"
+                    "outcome": "pass"
                 },
                 {
                     "check": "leaks",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": true,
-                    "result": 1,
-					"outcome": "reject"
+                    "result": 5,
+                    "outcome": "fail"
                 }
-            ], 
-			"full_output": "output_valgrind.xml"
+            ],
+            "full_output": "output_valgrind.xml"
         },
         "cppcheck": {
-			"enabled": true,
-			"show_to_student": false,
+            "enabled": true,
+            "show_to_student": false,
             "bin": "cppcheck",
-			"arguments": "",
+            "arguments": "",
             "checks": [
                 {
                     "check": "error",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": false,
-                    "result": 1,
-					"outcome": "fail"
+                    "result": 0,
+                    "outcome": "pass"
                 },
                 {
                     "check": "warning",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 3,
                     "autoreject": false,
                     "result": 0,
-					"outcome": "pass"
+                    "outcome": "pass"
                 },
                 {
                     "check": "style",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 3,
                     "autoreject": false,
-                    "result": 3,
-					"outcome": "pass"
+                    "result": 2,
+                    "outcome": "pass"
                 },
                 {
                     "check": "performance",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 2,
                     "autoreject": false,
                     "result": 0,
-					"outcome": "pass"
+                    "outcome": "pass"
                 },
                 {
                     "check": "portability",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": false,
                     "result": 0,
-					"outcome": "pass"
+                    "outcome": "pass"
                 },
                 {
                     "check": "information",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": false,
                     "result": 1,
-					"outcome": "fail"
+                    "outcome": "fail"
                 },
                 {
                     "check": "unusedFunction",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": false,
                     "result": 0,
-					"outcome": "pass"
+                    "outcome": "pass"
                 },
                 {
                     "check": "missingInclude",
-					"enabled": true,
+                    "enabled": true,
                     "limit": 0,
                     "autoreject": false,
                     "result": 0,
-					"outcome": "pass"
+                    "outcome": "pass"
                 }
-            ], 
-			"full_output": "output_cppcheck.xml"
+            ],
+            "full_output": "output_cppcheck.xml"
         },
         "clang-format": {
-			"enabled": true,
-			"show_to_student": false,
+            "enabled": true,
+            "show_to_student": false,
             "bin": "clang-format",
-			"arguments": "",
+            "arguments": "",
             "check": {
-                "name": "strict",
+                "level": "strict",
                 ".comment": "can be diffrent checks, such as strict, less, minimal and so on",
                 "file": ".clang-format",
                 "limit": 5,
                 "autoreject": true,
-                "result": 5,
-				"outcome": "pass"
-            }, 
-			"full_output": "output_format.xml"
+                "result": 8,
+                "outcome": "fail"
+            },
+            "full_output": "output_format.xml"
         },
         "copydetect": {
-			"enabled": true,
-			"show_to_student": false,
+            "enabled": true,
+            "show_to_student": false,
             "bin": "copydetect",
-			"arguments": "",
+            "arguments": "",
             "check": {
                 "type": "with_all",
-                ".comment1": "can be diffrent types, such as with same group/subgroup",
                 "limit": 50,
-                ".comment2": "limit is maximum match percentage",
-                "autoreject": true,
-				"result": 44,
-				"outcome": "pass"
+                "reference_directory": "copydetect",
+                "autoreject": true
             },
-			"full_output": "output_copydetect.html"
+            "full_output": "output_copydetect.html"
         },
         "autotests": {
             "enabled": true,
