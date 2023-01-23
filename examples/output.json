@@ -7,7 +7,8 @@
             "check": {
                 "autoreject": true,
                 "outcome": "pass"
-            }
+            },
+            "full_output": "output_build.txt"
         },
         "valgrind": {
 			"enabled": true,
@@ -33,7 +34,7 @@
 					"outcome": "reject"
                 }
             ], 
-			"output": ""
+			"full_output": "output_valgrind.xml"
         },
         "cppcheck": {
 			"enabled": true,
@@ -106,7 +107,7 @@
 					"outcome": "pass"
                 }
             ], 
-			"output": ""
+			"full_output": "output_cppcheck.xml"
         },
         "clang-format": {
 			"enabled": true,
@@ -122,7 +123,7 @@
                 "result": 5,
 				"outcome": "pass"
             }, 
-			"output": ""
+			"full_output": "output_format.xml"
         },
         "copydetect": {
 			"enabled": true,
@@ -138,7 +139,20 @@
 				"result": 44,
 				"outcome": "pass"
             },
-			"output": "<html>...</html>"
+			"full_output": "output_copydetect.html"
+        },
+        "autotests": {
+            "enabled": true,
+            "show_to_student": false,
+            "test_path": "test_example.cpp",
+            "check": {
+                "limit": 0,
+                "autoreject": true,
+                "outcome": "fail",
+                "errors": 0,
+                "failures": 3
+            },
+            "full_output": "output_tests.txt"
         }
     }
 }
