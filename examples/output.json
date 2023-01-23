@@ -1,5 +1,14 @@
 {
     "tools": {
+        "build": {
+            "enabled": true,
+            "show_to_student": false,
+            "language": "C++",
+            "check": {
+                "autoreject": true,
+                "outcome": "pass"
+            }
+        },
         "valgrind": {
 			"enabled": true,
 			"show_to_student": false,
