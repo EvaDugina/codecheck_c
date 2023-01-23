@@ -54,14 +54,14 @@ def test_build():
 
     compile_command = ''
     flags = []
-    if data['language'] == 'C++':
+    if data['tools']['build']['language'] == 'C++':
         compile_command = 'g++'
         flags.append('-c')
-    elif data['language'] == 'C++':
+    elif data['tools']['build']['language'] == 'C++':
         compile_command = 'gcc'
         flags.append('-c')
     else:
-        print('Language {} not supported, check failed'.format(data['language']))
+        print('Language {} not supported, check failed'.format(data['tools']['build']['language']))
         exit()
 
     global compiled_files
