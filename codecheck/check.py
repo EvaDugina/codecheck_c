@@ -38,11 +38,11 @@ def check_tools():
 def run_tools():
     print("Running tools..")
     if test_build():
-    test_cppcheck()
-    test_clang_format()
-    test_autotests()
-    test_valgrind()
-    test_copydetect()
+        test_cppcheck()
+        test_clang_format()
+        test_autotests()
+        test_valgrind()
+        test_copydetect()
     else:
         print('Code not builded, check failed')
     
