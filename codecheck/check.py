@@ -78,6 +78,13 @@ def test_valgrind():
 
     write_result('valgrind', 'leaks', leaks_count)
     write_result('valgrind', 'errors', errors_count)
+
+    for val in data['tools']['valgrind']['checks']:
+        if val['check'] == 'errors':
+            val['outcome'] = 'pass' if val['limit'] >= errors_count else 'fail'
+        if val['check'] == 'leaks':
+            val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'fail'
+
     data['tools']['valgrind']['full_output'] = 'output_valgrind.xml'
     os.remove(test_executable_name)
     os.remove('valgrind.xml')
@@ -113,6 +120,7 @@ def test_cppcheck():
     for c in data['tools']['cppcheck']['checks']:
         if c['check'] in errors_count:
             c['result'] = errors_count[c['check']]
+            c['outcome'] = 'pass' if c['limit'] >= errors_count[c['check']] else 'fail'
         else:
             c['result'] = 0
 
@@ -140,6 +148,7 @@ def test_clang_format():
             elem.clear()
     
     data['tools']['clang-format']['check']['result'] = replacements
+    data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
     data['tools']['clang-format']['full_output'] = 'output_format.xml'
     print('Clang-format checked')
 
@@ -192,6 +201,11 @@ def test_autotests():
 
     if not data['tools']['valgrind']:
         os.remove(test_executable_name)
+
+    if errors > 0 or failures > data['tools']['autotests']['check']['limit']:
+        data['tools']['autotests']['check']['outcome'] = 'fail'
+    else:
+        data['tools']['autotests']['check']['outcome'] = 'pass'
 
     data['tools']['autotests']['check']['errors'] = errors
     data['tools']['autotests']['check']['failures'] = failures
