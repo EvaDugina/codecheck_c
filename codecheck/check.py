@@ -161,9 +161,9 @@ def test_cppcheck():
     for c in data['tools']['cppcheck']['checks']:
         if c['check'] in errors_count:
             c['result'] = errors_count[c['check']]
-            c['outcome'] = 'pass' if c['limit'] >= errors_count[c['check']] else 'fail'
         else:
             c['result'] = 0
+        c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'fail'
 
     data['tools']['cppcheck']['full_output'] = 'output_cppcheck.xml'
     print("Cppcheck checked")
