@@ -69,7 +69,12 @@ def test_build():
     for file in files:
         compiled_files.append(file.split('.')[0] + '.o')
 
-    result = subprocess.run([compile_command] + flags + files, stdout=subprocess.PIPE)
+    result = subprocess.run([compile_command] + flags + files, capture_output=True)
+
+    output = open("output_build.txt", "w")
+    data['tools']['build']['check']['full_output'] = 'output_build.txt'
+    output.write(str(result.stderr))
+    output.close()
 
     if result.returncode == 0:
         data['tools']['build']['check']['outcome'] = 'pass'
