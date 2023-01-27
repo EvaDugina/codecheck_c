@@ -272,4 +272,7 @@ def test_copydetect():
     data['tools']['copydetect']['full_output'] = "output_copydetect.html"
     data['tools']['copydetect']['outcome'] = 'pass'
 
+    data['tools']['copydetect']['check']['outcome'] = 'pass'
+    data['tools']['copydetect']['check']['result'] = 0
+
     print('Copydetect checked')
