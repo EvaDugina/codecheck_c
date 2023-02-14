@@ -61,7 +61,7 @@ def test_build():
     if data['tools']['build']['language'] == 'C++':
         compile_command = 'g++'
         flags.append('-c')
-    elif data['tools']['build']['language'] == 'C++':
+    elif data['tools']['build']['language'] == 'C':
         compile_command = 'gcc'
         flags.append('-c')
     else:
