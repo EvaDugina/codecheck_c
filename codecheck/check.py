@@ -86,7 +86,10 @@ def test_build():
         print("Build checked")
         return True
     else:
-        data['tools']['build']['check']['outcome'] = 'fail'
+        if data['tools']['build']['autoreject'] == True:
+            data['tools']['build']['check']['outcome'] = 'reject'
+        else:
+            data['tools']['build']['check']['outcome'] = 'fail'
         print("Build checked")
         return False
 
@@ -127,9 +130,15 @@ def test_valgrind():
 
     for val in data['tools']['valgrind']['checks']:
         if val['check'] == 'errors':
-            val['outcome'] = 'pass' if val['limit'] >= errors_count else 'fail'
+            if val['autoreject'] == True:
+                val['outcome'] = 'pass' if val['limit'] >= errors_count else 'reject'
+            else:
+                val['outcome'] = 'pass' if val['limit'] >= errors_count else 'fail'
         if val['check'] == 'leaks':
-            val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'fail'
+            if val['autoreject'] == True:
+                val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'reject'
+            else:
+                val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'fail'
 
     data['tools']['valgrind']['full_output'] = 'output_valgrind.xml'
     data['tools']['valgrind']['outcome'] = 'pass'
@@ -169,7 +178,10 @@ def test_cppcheck():
             c['result'] = errors_count[c['check']]
         else:
             c['result'] = 0
-        c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'fail'
+        if c['autoreject'] == True:
+            c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'reject'
+        else:
+            c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'fail'
 
     data['tools']['cppcheck']['full_output'] = 'output_cppcheck.xml'
     data['tools']['cppcheck']['outcome'] = 'pass'
@@ -196,9 +208,13 @@ def test_clang_format():
             elem.clear()
     
     data['tools']['clang-format']['check']['result'] = replacements
-    data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
+
+    if data['tools']['clang-format']['check']['autoreject'] == True:
+        data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'reject'
+    else:
+        data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
+
     data['tools']['clang-format']['full_output'] = 'output_format.xml'
-    data['tools']['clang-format']['outcome'] = 'pass'
     print('Clang-format checked')
 
 def test_autotests():
@@ -244,7 +260,10 @@ def test_autotests():
         os.remove(test_executable_name)
 
     if errors > 0 or failures > data['tools']['autotests']['check']['limit']:
-        data['tools']['autotests']['check']['outcome'] = 'fail'
+        if data['tools']['autotests']['check']['autoreject'] == True:
+            data['tools']['autotests']['check']['outcome'] = 'reject'
+        else:
+            data['tools']['autotests']['check']['outcome'] = 'fail'
     else:
         data['tools']['autotests']['check']['outcome'] = 'pass'
 
