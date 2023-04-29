@@ -86,7 +86,7 @@ def test_build():
         print("Build checked")
         return True
     else:
-        if data['tools']['build']['autoreject'] == True:
+        if data['tools']['build']['check']['autoreject'] == True:
             data['tools']['build']['check']['outcome'] = 'reject'
         else:
             data['tools']['build']['check']['outcome'] = 'fail'
