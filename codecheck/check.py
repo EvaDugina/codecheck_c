@@ -102,7 +102,7 @@ def test_valgrind():
         enabled_types.append(c['check'])
 
     # if not builded early on autotest stage
-    if not data['tools']['autotests']:
+    if not 'autotests' in data['tools'] or data['tools']['autotests']['enabled'] == False:
         compile_command = data['tools']['valgrind']['compiler']
         compile_command += ' '
         for file in files:
