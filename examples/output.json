@@ -6,9 +6,9 @@
             "language": "C++",
             "check": {
                 "autoreject": true,
-                "full_output": "output_build.txt",
                 "outcome": "pass"
             },
+            "full_output": "output_build.txt",
             "outcome": "pass"
         },
         "valgrind": {
@@ -146,7 +146,9 @@
         "autotests": {
             "enabled": true,
             "show_to_student": false,
-            "test_path": "test_example.cpp",
+            "test_path": [
+                "test_example.cpp"
+            ],
             "check": {
                 "limit": 0,
                 "autoreject": true,

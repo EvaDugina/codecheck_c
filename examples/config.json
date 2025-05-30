@@ -9,7 +9,7 @@
             }
         },
         "valgrind": {
-			"enabled": true,
+			"enabled": false,
 			"show_to_student": false,
             "bin": "valgrind", 
 			"arguments": "",
@@ -30,7 +30,7 @@
             ]
         },
         "cppcheck": {
-			"enabled": true,
+			"enabled": false,
 			"show_to_student": false,
             "bin": "cppcheck", 
 			"arguments": "",
@@ -86,7 +86,7 @@
             ]
         },
         "clang-format": {
-			"enabled": true,
+			"enabled": false,
 			"show_to_student": false,
             "bin": "clang-format",
 			"arguments": "",
@@ -99,7 +99,7 @@
             }
         },
         "copydetect": {
- 			"enabled": true,
+ 			"enabled": false,
 			"show_to_student": false,
             "bin": "copydetect",
 			"arguments": "",
@@ -111,7 +111,7 @@
             }
        },
        "autotests": {
-            "enabled": true,
+            "enabled": false,
 			"show_to_student": false,
             "test_path": "test_example.cpp",
             "check": {

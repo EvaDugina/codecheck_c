@@ -32,9 +32,9 @@ def check_tools():
             print("Tool " + tool['bin'] + " not installed, skipping..")
             # deleted_tools.append(key)
             tool['enabled'] == False
-            tool['outcome'] = 'skip'
+            tool['language'] = 'skip'
         if (tool['enabled'] == False):
-            tool['outcome'] = 'skip'
+            tool['language'] = 'skip'
     # for tool in deleted_tools:
     #     data['tools'].pop(tool)
 
@@ -80,16 +80,16 @@ def test_build():
     output.write(str(result.stderr))
     output.close()
 
-    data['tools']['build']['outcome'] = 'pass'
+    data['tools']['build']['language'] = 'pass'
     if result.returncode == 0:
-        data['tools']['build']['check']['outcome'] = 'pass'
+        data['tools']['build']['check']['language'] = 'pass'
         print("Build checked")
         return True
     else:
         if data['tools']['build']['check']['autoreject'] == True:
-            data['tools']['build']['check']['outcome'] = 'reject'
+            data['tools']['build']['check']['language'] = 'reject'
         else:
-            data['tools']['build']['check']['outcome'] = 'fail'
+            data['tools']['build']['check']['language'] = 'fail'
         print("Build checked")
         return False
 
@@ -131,17 +131,17 @@ def test_valgrind():
     for val in data['tools']['valgrind']['checks']:
         if val['check'] == 'errors':
             if val['autoreject'] == True:
-                val['outcome'] = 'pass' if val['limit'] >= errors_count else 'reject'
+                val['language'] = 'pass' if val['limit'] >= errors_count else 'reject'
             else:
-                val['outcome'] = 'pass' if val['limit'] >= errors_count else 'fail'
+                val['language'] = 'pass' if val['limit'] >= errors_count else 'fail'
         if val['check'] == 'leaks':
             if val['autoreject'] == True:
-                val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'reject'
+                val['language'] = 'pass' if val['limit'] >= leaks_count else 'reject'
             else:
-                val['outcome'] = 'pass' if val['limit'] >= leaks_count else 'fail'
+                val['language'] = 'pass' if val['limit'] >= leaks_count else 'fail'
 
     data['tools']['valgrind']['full_output'] = 'output_valgrind.xml'
-    data['tools']['valgrind']['outcome'] = 'pass'
+    data['tools']['valgrind']['language'] = 'pass'
     os.remove(test_executable_name)
     os.remove('valgrind.xml')
     print('Valgrind checked')
@@ -179,12 +179,12 @@ def test_cppcheck():
         else:
             c['result'] = 0
         if c['autoreject'] == True:
-            c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'reject'
+            c['language'] = 'pass' if c['limit'] >= c['result'] else 'reject'
         else:
-            c['outcome'] = 'pass' if c['limit'] >= c['result'] else 'fail'
+            c['language'] = 'pass' if c['limit'] >= c['result'] else 'fail'
 
     data['tools']['cppcheck']['full_output'] = 'output_cppcheck.xml'
-    data['tools']['cppcheck']['outcome'] = 'pass'
+    data['tools']['cppcheck']['language'] = 'pass'
     print("Cppcheck checked")
 
 def test_clang_format():
@@ -210,9 +210,9 @@ def test_clang_format():
     data['tools']['clang-format']['check']['result'] = replacements
 
     if data['tools']['clang-format']['check']['autoreject'] == True:
-        data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'reject'
+        data['tools']['clang-format']['check']['language'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'reject'
     else:
-        data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
+        data['tools']['clang-format']['check']['language'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
 
     data['tools']['clang-format']['full_output'] = 'output_format.xml'
     print('Clang-format checked')
@@ -261,16 +261,16 @@ def test_autotests():
 
     if errors > 0 or failures > data['tools']['autotests']['check']['limit']:
         if data['tools']['autotests']['check']['autoreject'] == True:
-            data['tools']['autotests']['check']['outcome'] = 'reject'
+            data['tools']['autotests']['check']['language'] = 'reject'
         else:
-            data['tools']['autotests']['check']['outcome'] = 'fail'
+            data['tools']['autotests']['check']['language'] = 'fail'
     else:
-        data['tools']['autotests']['check']['outcome'] = 'pass'
+        data['tools']['autotests']['check']['language'] = 'pass'
 
     data['tools']['autotests']['check']['errors'] = errors
     data['tools']['autotests']['check']['failures'] = failures
     data['tools']['autotests']['full_output'] = "output_tests.txt"
-    data['tools']['autotests']['outcome'] = "pass"
+    data['tools']['autotests']['language'] = "pass"
     print('Autotests checked')
 
 def test_copydetect():
@@ -289,9 +289,9 @@ def test_copydetect():
     system(command)
     rmtree('test_directory')
     data['tools']['copydetect']['full_output'] = "output_copydetect.html"
-    data['tools']['copydetect']['outcome'] = 'pass'
+    data['tools']['copydetect']['language'] = 'pass'
 
-    data['tools']['copydetect']['check']['outcome'] = 'pass'
+    data['tools']['copydetect']['check']['language'] = 'pass'
     data['tools']['copydetect']['check']['result'] = 0
 
     print('Copydetect checked')

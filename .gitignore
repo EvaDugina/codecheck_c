@@ -5,5 +5,9 @@ __pycache__
 build/
 dist/
 codecheck.egg-info/
+*autotesting*
+output_*
+*output.json
 
 .cache
+.idea
