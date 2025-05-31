@@ -1,3 +1,3 @@
-[submodule "codecheck/copydetect"]
-	path = codecheck/copydetect
-	url = http://vega.fcyb.mirea.ru/gitlab/kvasnikoff/copydetect
+[submodule "submodules/codecheck_core"]
+	path = submodules/codecheck_core
+	url = http://vgit.mirea.ru/EvaDugina/codecheck-core.git
