@@ -19,3 +19,7 @@ codecheck [-h] -c config.json [-f .clang-format] files [files ...]
 | -h, --help   | show help message and exit|
 | -c, --conf   | path to JSON configuration file (default: None) |
 | -f, --format | path to clang-format configuration (default: None) |
+
+###
+docker build -t codecheck .
+docker run -it --rm codecheck

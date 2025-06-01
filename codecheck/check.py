@@ -150,6 +150,7 @@ def test_cppcheck():
     if not 'cppcheck' in data['tools'] or data['tools']['cppcheck']['enabled'] == False:
         return
     print('Running cppcheck...')
+
     enabled_types = []
     for c in data['tools']['cppcheck']['checks']:
         if c['check'] != 'error':

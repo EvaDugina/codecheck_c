@@ -1,6 +1,7 @@
 import argparse
 
-from codecheck import checkcode
+from codecheck_core import start
+from .tools_config import TOOLS_CHECKERS
 
 
 def main():
@@ -27,13 +28,19 @@ def main():
     #     "files_to_check": args.files,
     # }
 
-    # Uncomment code below and comment code above to test without cl args
+    # Debugging on Windows
+    # config = {
+    #     "config_json": '../examples/config_all_debug.json',
+    #     "files_to_check": ["../examples/code_example.c"],
+    # }
+
+    # Console Testing
     config = {
-        "config_json": '../examples/config_build.json',
-        "files_to_check": ["../examples/code_example.c"],
+        "config_json": 'examples/config_all_console.json',
+        "files_to_check": ["examples/code_example.c"],
     }
 
-    checkcode.start(config["config_json"], config["files_to_check"])
+    start(TOOLS_CHECKERS, config["config_json"], config["files_to_check"])
     
 
 if __name__ == "__main__":
