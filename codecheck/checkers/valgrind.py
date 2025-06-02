@@ -1,6 +1,5 @@
-import os
 import subprocess
-import xml.etree.ElementTree as ET
+
 
 from codecheck_core import Checker
 from codecheck_core import CheckResult
@@ -13,11 +12,8 @@ test_executable_name = "test"
 class Valgrind(Checker):
 
     #
-    # GETTERS
     #
-
-    def _get_special_flags(self) -> list[str]:
-        return ['-c'] + self._files_to_check
+    #
 
     #
     # WORK
@@ -38,30 +34,29 @@ class Valgrind(Checker):
         custom_flags = '--xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name).split(" ")
         self._run_command_without_result(
             custom_flags=custom_flags,
-            files_to_wait=["valgrind.xml"],
+            files_to_wait=['valgrind.xml'],
             is_only_custom_flags=True)
 
         custom_flags = './{} > /dev/null 2> ./{}'.format(test_executable_name, self._get_output_file_name()).split(" ")
-        self._run_command_without_result(
+
+        return self._run_command_without_result(
             custom_flags=custom_flags,
-            files_to_wait=["valgrind.xml", self._get_output_file_name()],
+            result_type=str,
             is_only_custom_flags=True)
 
-        return self._run_command(result_type=subprocess.CompletedProcess)
+    def _update_tool_result_from_output(self, output):
 
-    def _update_tool_result_from_output(self, result):
+        # print("OUTPUT: " + output)
 
         leaks_count = 0
         errors_count = 0
-        for event, elem in ET.iterparse('valgrind.xml'):  # incremental parsing
+        for event, elem in self.iterate_xml('valgrind.xml'):  # incremental parsing
             if elem.tag == 'kind':
                 if elem.text.startswith('Leak_'):
                     leaks_count += 1
                 else:
                     errors_count += 1
                 elem.clear()
-        os.remove(test_executable_name)
-        os.remove('valgrind.xml')
 
         flag_autoreject = False
         for check_config in self._tool_config.get_checks():
@@ -83,9 +78,7 @@ class Valgrind(Checker):
 
             self._tool_result.set_check(check_result)
 
+        self._tool_result.set_param(Param.FULL_OUTPUT, output)
         self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
-
-        if self._tool_result.get_param(Param.OUTCOME):
-            self._tool_result.set_param(Param.FULL_OUTPUT, 'Проверка пройдена!')
 
         return

@@ -1,5 +1,3 @@
-import xml.etree.ElementTree as ET
-
 from codecheck_core import CheckResult
 from codecheck_core import Checker
 from codecheck_core import Outcome
@@ -42,7 +40,7 @@ class Cppcheck(Checker):
 
         errors_count = {}
         try:
-            for event, elem in ET.iterparse(f'{self._get_output_file_path()}'):  # incremental parsing
+            for event, elem in self.iterate_xml(self._get_output_file_name()):  # incremental parsing
                 if elem.tag == 'error':
                     severity = elem.get('severity')
                     if errors_count.get(severity) is None:

@@ -1,3 +1,4 @@
 [submodule "submodules/codecheck_core"]
 	path = submodules/codecheck_core
 	url = http://vgit.mirea.ru/EvaDugina/codecheck-core.git
+	branch = for-codecheck

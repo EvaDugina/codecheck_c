@@ -18,4 +18,6 @@ COPY ./ /tmp/
 
 RUN cd /tmp/ && chmod 777 -R ./ && pip install . && cd /
 
+VOLUME /tmp
+
 WORKDIR /tmp

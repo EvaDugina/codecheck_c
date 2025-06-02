@@ -3,7 +3,7 @@
 
 int multiplyOdd(int n)
 {
-    int *i = (int*)malloc(sizeof(int));
+    int *i = (int*)malloc(sizeof(int)*4);
     int result = 0;
     while (n > 0)
     {
@@ -24,8 +24,8 @@ int multiplyOdd(int n)
     return 0;
 }
 
-// int main()
-// {
-//     multiplyOdd(1234);
-//     return 0;
-// }
+ int main()
+ {
+     multiplyOdd(123456789);
+     return 0;
+ }

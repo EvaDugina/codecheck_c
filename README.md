@@ -22,4 +22,4 @@ codecheck [-h] -c config.json [-f .clang-format] files [files ...]
 
 ###
 docker build -t codecheck .
-docker run -it --rm codecheck
+docker run -it --rm -v ./:/tmp codecheck
