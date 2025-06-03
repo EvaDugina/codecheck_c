@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from setuptools import setup, find_packages
 
@@ -30,6 +31,7 @@ setup(name="codecheck",
       long_description_content_type="text/markdown",
       url="https://vega.fcyb.mirea.ru/gitlab/chernousov/codecheck",
       packages=find_packages(),  # Находит пакет `codecheck`
+      include_package_data=True,
       install_requires=[
           # Зависимость на локальный пакет (PEP 508 format)
           f"codecheck-core @ file://{CORE_DIR.resolve()}",

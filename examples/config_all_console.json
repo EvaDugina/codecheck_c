@@ -65,7 +65,8 @@
             ]
         },
         "valgrind": {
-			"enabled": true,
+			"enabled": false,
+            "autoreject": false,
             "bin": "valgrind",
 			"arguments": "",
             "compiler": "gcc",
@@ -83,6 +84,17 @@
                     "limit": 0
                 }
             ]
+        },
+        "clang-format": {
+			"enabled": true,
+            "autoreject": false,
+            "bin": "clang-format",
+			"arguments": "",
+            "check": {
+                "autoreject": true,
+                "level": "strict",
+                "limit": 5
+            }
         }
     }
 }

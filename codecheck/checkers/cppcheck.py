@@ -17,7 +17,7 @@ class Cppcheck(Checker):
                 enabled_types.append(check.get_name())
         flag = '--enable='
         flag += ','.join(enabled_types)
-        return [flag] + ["--xml"] + [f"--output-file={self._get_output_file_name()}"]
+        return [flag, "--xml", f"--output-file={self._get_output_file_name()}", self._get_student_code_folder()]
 
     def _get_output_file_name(self) -> str:
         return f"output_{self._tool_config.get_name()}.xml"
@@ -30,17 +30,19 @@ class Cppcheck(Checker):
     #
 
     def _run(self):
-        self._run_command_without_result(
-            filenames=self._files_to_check,
+
+        self._run_command_with_timeout(
             files_to_wait=[self._get_output_file_name()],
         )
         return None
 
     def _update_tool_result_from_output(self, result):
 
+        # print("_update_tool_result_from_output()")
+
         errors_count = {}
         try:
-            for event, elem in self.iterate_xml(self._get_output_file_name()):  # incremental parsing
+            for event, elem in self.iterate_xml_file(self._get_output_file_name()):  # incremental parsing
                 if elem.tag == 'error':
                     severity = elem.get('severity')
                     if errors_count.get(severity) is None:
@@ -49,7 +51,7 @@ class Cppcheck(Checker):
                         errors_count[severity] += 1
                     elem.clear()
         except Exception as e:
-            print(e)
+            print("Exception:" + str(e))
 
         flag_autoreject = False
         for check_config in self._tool_config.get_checks():

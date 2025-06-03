@@ -42,3 +42,16 @@ class ValgrindToolConfig(CheckerToolConfig):
         super().__init__(self.config_tool_params, self.config_check_params)
 
 
+class ClangFormatToolConfig(CheckerToolConfig):
+
+    config_tool_params: list[Param] = [
+    ]
+
+    config_check_params: list[Param] = [
+        Param.LIMIT
+    ]
+
+    def __init__(self):
+        super().__init__(self.config_tool_params, self.config_check_params)
+
+

@@ -1,3 +1,4 @@
+import re
 import subprocess
 
 
@@ -19,38 +20,98 @@ class Valgrind(Checker):
     # WORK
     #
 
+    def __find_main_in_file(self, file_path):
+        """Определяет тип точки входа в файле"""
+        with open(file_path) as f:
+            content = f.read()
+
+        if re.search(r'int\s+main\s*\(', content):
+            return 'standard'
+        elif re.search(r'void\s+main\s*\(', content):
+            return 'void'
+        # elif re.search(r'test_main', content):
+        #     return 'test'
+        return None
+
+    def __check_file_compilation(self, bin: str, file_path: str) -> bool:
+
+        entry_type = self.__find_main_in_file(file_path)
+
+        if not entry_type:
+            print(f"Пропуск: {file_path} не содержит точку входа")
+            return False
+
+        custom_flags = {
+            'standard': ["-g", file_path, "-o", test_executable_name],
+            'void': ["-g", "-DINT_MAIN_FIX", file_path, "-o", test_executable_name],
+            # 'test': "{bin} -g file.c -lcriterion -o tests"
+        }[entry_type]
+
+        result = self._run_command(
+            bin=bin,
+            result_type=subprocess.CompletedProcess,
+            custom_flags=custom_flags,
+            is_only_custom_flags=True)
+
+        if result.returncode != 0:
+            print(f"Ошибка компиляции: {result.stderr.decode()}")
+            return False
+
+        return True
+
     def _run(self):
-        custom_flags = ["-o"] + [test_executable_name]
+
         if self._tool_config.get_param_as_json(Param.COMPILER) == "gcc":
             bin = "gcc"
         else:
             bin = "g++"
-        self._run_command_without_result(
-            bin=bin,
-            filenames=self._files_to_check,
-            custom_flags=custom_flags,
-            is_only_custom_flags=True)
 
-        custom_flags = '--xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name).split(" ")
-        self._run_command_without_result(
-            custom_flags=custom_flags,
-            files_to_wait=['valgrind.xml'],
-            is_only_custom_flags=True)
+        outputs: list = []
 
-        custom_flags = './{} > /dev/null 2> ./{}'.format(test_executable_name, self._get_output_file_name()).split(" ")
+        for file_path in self._files_to_check:
 
-        return self._run_command_without_result(
-            custom_flags=custom_flags,
-            result_type=str,
-            is_only_custom_flags=True)
+            if self.__check_file_compilation(bin, file_path):
 
-    def _update_tool_result_from_output(self, output):
+                custom_flags = '--xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name).split(" ")
+                self._run_command_with_timeout(
+                    custom_flags=custom_flags,
+                    files_to_wait=['valgrind.xml'],
+                    is_only_custom_flags=True)
 
-        # print("OUTPUT: " + output)
+                custom_flags = './{} > /dev/null 2> ./{}'.format(test_executable_name, self._get_output_file_name()).split(" ")
+
+                output = self._run_command_with_timeout(
+                    custom_flags=custom_flags,
+                    result_type=str,
+                    is_only_custom_flags=True)
+
+                outputs.append(output)
+
+            else:
+                continue
+
+        return outputs
+
+    def _update_tool_result_from_output(self, outputs: list):
+
+        print(outputs)
+
+        if len(outputs) == 0:
+            for check_config in self._tool_config.get_checks():
+                check_result = CheckResult(name=check_config.get_name(),
+                                           check_params=self._tool_result.get_check_params())
+                check_result.set_param(Param.RESULT, 0)
+                check_result.set_param(Param.OUTCOME, Outcome.UNDEFINED)
+                self._tool_result.set_check(check_result)
+
+            self._tool_result.set_param(Param.FULL_OUTPUT, f"Ошибка! Отсутствует точка входа!")
+            self._tool_result.set_param(Param.OUTCOME, Outcome.FAIL)
+
+            return
 
         leaks_count = 0
         errors_count = 0
-        for event, elem in self.iterate_xml('valgrind.xml'):  # incremental parsing
+        for event, elem in self.iterate_xml_file('valgrind.xml'):  # incremental parsing
             if elem.tag == 'kind':
                 if elem.text.startswith('Leak_'):
                     leaks_count += 1

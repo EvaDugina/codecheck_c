@@ -37,7 +37,9 @@ def main():
     # Console Testing
     config = {
         "config_json": 'examples/config_all_console.json',
-        "files_to_check": ["examples/code_example.c"],
+        "files_to_check": [
+            "examples/code_example_1.c", "examples/code_example_2.c"
+        ],
     }
 
     start(TOOLS_CHECKERS, config["config_json"], config["files_to_check"])
