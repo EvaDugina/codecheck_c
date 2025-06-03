@@ -1,13 +1,12 @@
+import os.path
 import re
 import subprocess
-
+import xml.etree.ElementTree as ET
 
 from codecheck_core import Checker
 from codecheck_core import CheckResult
 from codecheck_core import Outcome
 from codecheck_core import Param
-
-test_executable_name = "test"
 
 
 class Valgrind(Checker):
@@ -21,9 +20,9 @@ class Valgrind(Checker):
     #
 
     def __find_main_in_file(self, file_path):
+
         """Определяет тип точки входа в файле"""
-        with open(file_path) as f:
-            content = f.read()
+        content = self.read_file_from_test_folder(file_path)
 
         if re.search(r'int\s+main\s*\(', content):
             return 'standard'
@@ -33,18 +32,18 @@ class Valgrind(Checker):
         #     return 'test'
         return None
 
-    def __check_file_compilation(self, bin: str, file_path: str) -> bool:
+    def __check_file_compilation(self, bin: str, file_path: str, o_file_name: str) -> bool:
 
         entry_type = self.__find_main_in_file(file_path)
 
-        if not entry_type:
+        if entry_type is None:
             print(f"Пропуск: {file_path} не содержит точку входа")
             return False
 
         custom_flags = {
-            'standard': ["-g", file_path, "-o", test_executable_name],
-            'void': ["-g", "-DINT_MAIN_FIX", file_path, "-o", test_executable_name],
-            # 'test': "{bin} -g file.c -lcriterion -o tests"
+            'standard': ["-g", file_path, "-o", o_file_name],
+            'void': ["-g", "-DINT_MAIN_FIX", file_path, "-o", o_file_name],
+            # 'test': "{bin} -g file.c -lcriterion -o o_file_name"
         }[entry_type]
 
         result = self._run_command(
@@ -59,44 +58,50 @@ class Valgrind(Checker):
 
         return True
 
-    def _run(self):
+    def _run(self) -> list[dict[str, str]]:
 
         if self._tool_config.get_param_as_json(Param.COMPILER) == "gcc":
             bin = "gcc"
         else:
             bin = "g++"
 
-        outputs: list = []
+        results: list = []
 
         for file_path in self._files_to_check:
 
-            if self.__check_file_compilation(bin, file_path):
+            # print(f"Checking {file_path} for main()...")
 
-                custom_flags = '--xml=yes --xml-file=valgrind.xml ./{} > /dev/null'.format(test_executable_name).split(" ")
+            o_file_name = "test"
+            o_file_name = os.path.basename(file_path).split(".")[0]
+
+            if self.__check_file_compilation(bin, file_path, o_file_name):
+
+                # print(f"Has main() {file_path}!")
+
+                custom_flags = ['--xml=yes', '--xml-file=valgrind.xml', f'./{o_file_name}']
                 self._run_command_with_timeout(
                     custom_flags=custom_flags,
+                    result_type=str,
                     files_to_wait=['valgrind.xml'],
                     is_only_custom_flags=True)
 
-                custom_flags = './{} > /dev/null 2> ./{}'.format(test_executable_name, self._get_output_file_name()).split(" ")
+                custom_flags = [f'./{o_file_name}']
 
                 output = self._run_command_with_timeout(
                     custom_flags=custom_flags,
                     result_type=str,
                     is_only_custom_flags=True)
 
-                outputs.append(output)
+                results.append({"xml": self.read_file_from_test_folder("valgrind.xml"), "output": output})
 
             else:
                 continue
 
-        return outputs
+        return results
 
-    def _update_tool_result_from_output(self, outputs: list):
+    def _update_tool_result_from_output(self, results: list[dict[str, str]]):
 
-        print(outputs)
-
-        if len(outputs) == 0:
+        if len(results) == 0:
             for check_config in self._tool_config.get_checks():
                 check_result = CheckResult(name=check_config.get_name(),
                                            check_params=self._tool_result.get_check_params())
@@ -111,13 +116,14 @@ class Valgrind(Checker):
 
         leaks_count = 0
         errors_count = 0
-        for event, elem in self.iterate_xml_file('valgrind.xml'):  # incremental parsing
-            if elem.tag == 'kind':
-                if elem.text.startswith('Leak_'):
-                    leaks_count += 1
-                else:
-                    errors_count += 1
-                elem.clear()
+        for result in results:
+            for elem in ET.fromstring(result["xml"]).iter():
+                if elem.tag == 'kind':
+                    if elem.text.startswith('Leak_'):
+                        leaks_count += 1
+                    else:
+                        errors_count += 1
+                    elem.clear()
 
         flag_autoreject = False
         for check_config in self._tool_config.get_checks():
@@ -139,7 +145,13 @@ class Valgrind(Checker):
 
             self._tool_result.set_check(check_result)
 
-        self._tool_result.set_param(Param.FULL_OUTPUT, output)
+        full_output = ""
+        for result in results:
+            if full_output != "":
+                full_output += "\n\n"
+            full_output += result['output']
+
+        self._tool_result.set_param(Param.FULL_OUTPUT, full_output)
         self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
 
         return

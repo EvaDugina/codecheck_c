@@ -65,7 +65,7 @@
             ]
         },
         "valgrind": {
-			"enabled": false,
+			"enabled": true,
             "autoreject": false,
             "bin": "valgrind",
 			"arguments": "",
