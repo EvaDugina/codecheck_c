@@ -15,6 +15,9 @@ class Build(Checker):
     def _get_special_flags(self) -> list[str]:
         return ['-c'] + self._files_to_check
 
+    def _get_output_file_name(self) -> str:
+        return f"output_{self._tool_config.get_name()}.txt"
+
     #
     # WORK
     #

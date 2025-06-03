@@ -13,6 +13,9 @@ class ClangFormat(Checker):
     # GETTERS
     #
 
+    def _get_special_flags(self) -> list[str]:
+        return []
+
     def _get_output_file_name(self) -> str:
         return f"output_{self._tool_config.get_name()}.xml"
 

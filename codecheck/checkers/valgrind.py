@@ -15,48 +15,15 @@ class Valgrind(Checker):
     #
     #
 
+    def _get_special_flags(self) -> list[str]:
+        return []
+
+    def _get_output_file_name(self) -> str:
+        return f"output_{self._tool_config.get_name()}.txt"
+
     #
     # WORK
     #
-
-    def __find_main_in_file(self, file_path):
-
-        """Определяет тип точки входа в файле"""
-        content = self.read_file_from_test_folder(file_path)
-
-        if re.search(r'int\s+main\s*\(', content):
-            return 'standard'
-        elif re.search(r'void\s+main\s*\(', content):
-            return 'void'
-        # elif re.search(r'test_main', content):
-        #     return 'test'
-        return None
-
-    def __check_file_compilation(self, bin: str, file_path: str, o_file_name: str) -> bool:
-
-        entry_type = self.__find_main_in_file(file_path)
-
-        if entry_type is None:
-            print(f"Пропуск: {file_path} не содержит точку входа")
-            return False
-
-        custom_flags = {
-            'standard': ["-g", file_path, "-o", o_file_name],
-            'void': ["-g", "-DINT_MAIN_FIX", file_path, "-o", o_file_name],
-            # 'test': "{bin} -g file.c -lcriterion -o o_file_name"
-        }[entry_type]
-
-        result = self._run_command(
-            bin=bin,
-            result_type=subprocess.CompletedProcess,
-            custom_flags=custom_flags,
-            is_only_custom_flags=True)
-
-        if result.returncode != 0:
-            print(f"Ошибка компиляции: {result.stderr.decode()}")
-            return False
-
-        return True
 
     def _run(self) -> list[dict[str, str]]:
 
@@ -155,3 +122,42 @@ class Valgrind(Checker):
         self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
 
         return
+
+    def __find_main_in_file(self, file_path):
+
+        """Определяет тип точки входа в файле"""
+        content = self.read_file_from_test_folder(file_path)
+
+        if re.search(r'int\s+main\s*\(', content):
+            return 'standard'
+        elif re.search(r'void\s+main\s*\(', content):
+            return 'void'
+        # elif re.search(r'test_main', content):
+        #     return 'test'
+        return None
+
+    def __check_file_compilation(self, bin: str, file_path: str, o_file_name: str) -> bool:
+
+        entry_type = self.__find_main_in_file(file_path)
+
+        if entry_type is None:
+            print(f"Пропуск: {file_path} не содержит точку входа")
+            return False
+
+        custom_flags = {
+            'standard': ["-g", file_path, "-o", o_file_name],
+            'void': ["-g", "-DINT_MAIN_FIX", file_path, "-o", o_file_name],
+            # 'test': "{bin} -g file.c -lcriterion -o o_file_name"
+        }[entry_type]
+
+        result = self._run_command(
+            bin=bin,
+            result_type=subprocess.CompletedProcess,
+            custom_flags=custom_flags,
+            is_only_custom_flags=True)
+
+        if result.returncode != 0:
+            print(f"Ошибка компиляции: {result.stderr.decode()}")
+            return False
+
+        return True

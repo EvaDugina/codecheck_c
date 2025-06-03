@@ -22,9 +22,6 @@ class Cppcheck(Checker):
     def _get_output_file_name(self) -> str:
         return f"output_{self._tool_config.get_name()}.xml"
 
-    def _get_error_message_if_no_output(self) -> str:
-        return "Отсутствует файл результата!"
-
     #
     # WORK
     #
@@ -34,7 +31,8 @@ class Cppcheck(Checker):
         self._run_command_with_timeout(
             files_to_wait=[self._get_output_file_name()],
         )
-        return None
+
+        return self.read_file_from_test_folder(self._get_output_file_name())
 
     def _update_tool_result_from_output(self, result):
 
@@ -73,7 +71,7 @@ class Cppcheck(Checker):
 
             self._tool_result.set_check(check_result)
 
-        self._tool_result.set_param(Param.FULL_OUTPUT, "")
+        self._tool_result.set_param(Param.FULL_OUTPUT, result)
         self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
 
         return
