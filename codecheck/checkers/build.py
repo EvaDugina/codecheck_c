@@ -32,7 +32,7 @@ class Build(Checker):
 
         if result.returncode == 0:
             check.set_param(Param.OUTCOME, Outcome.PASS)
-            self._tool_result.set_param(Param.FULL_OUTPUT, "Ошибки отсутствуют.")
+            self._tool_result.set_param(Param.FULL_OUTPUT, "Сборка выполнена успешно.")
         else:
             check.set_param(Param.OUTCOME, Outcome.FAIL)
             self._tool_result.set_param(Param.FULL_OUTPUT, f"{result.stderr}\n{result.stdout}")

@@ -38,7 +38,8 @@ def main():
     config = {
         "config_json": 'examples/config_all_console.json',
         "files_to_check": [
-            "examples/code_example_1.c", "examples/code_example_2.c"
+            "examples/code_example_1.c", "examples/code_example_2.c",
+            "examples/code_example_3.c", "examples/code_example_4.c"
         ],
     }
 
