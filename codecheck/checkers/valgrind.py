@@ -47,14 +47,14 @@ class Valgrind(Checker):
             if "." not in file_path:
                 continue
 
-            o_file_name = os.path.basename(file_path).split(".")[0]
+            base_name = os.path.basename(file_path).split(".")[0]
 
             main_type = self.__find_main_in_file(file_path)
             if main_type is None:
                 # print(f"{file_path} не содержит точку входа")
                 continue
 
-            is_correct_compilation_file, error = self.__is_correct_compilation_file(main_type, bin, file_path, o_file_name)
+            is_correct_compilation_file, error = self.__is_correct_compilation_file(main_type, bin, file_path, base_name)
 
             if not is_correct_compilation_file:
                 if "error" in error:
@@ -62,19 +62,21 @@ class Valgrind(Checker):
                 continue
 
             # print(f"Has main() {file_path}!")
-            custom_flags = ['--xml=yes', '--xml-file=valgrind.xml', f'./{o_file_name}']
+            custom_flags = ['--xml=yes', '--xml-file=valgrind.xml', f'./{base_name}']
             self._run_command_with_timeout(
                 custom_flags=custom_flags,
                 result_type=str,
                 files_to_wait=['valgrind.xml'],
-                is_only_custom_flags=True)
+                is_only_custom_flags=True
+            )
 
-            custom_flags = [f'./{o_file_name}']
+            custom_flags = [f'./{base_name}']
 
             output = self._run_command_with_timeout(
                 custom_flags=custom_flags,
                 result_type=str,
-                is_only_custom_flags=True)
+                is_only_custom_flags=True
+            )
 
             results.append({"xml": self.read_file_from_test_folder("valgrind.xml"), "output": output})
 
@@ -169,7 +171,8 @@ class Valgrind(Checker):
             bin=bin,
             result_type=subprocess.CompletedProcess,
             custom_flags=custom_flags,
-            is_only_custom_flags=True)
+            is_only_custom_flags=True
+        )
 
         if result.returncode != 0:
             return False, {"error": f"Ошибка компиляции: {result.stderr}"}

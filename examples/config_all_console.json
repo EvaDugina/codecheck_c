@@ -1,7 +1,7 @@
 {
     "tools": {
         "build": {
-            "enabled": true,
+            "enabled": false,
             "autoreject": false,
             "bin": "gcc",
             "check": {
@@ -9,7 +9,7 @@
             }
         },
         "cppcheck": {
-            "enabled": true,
+            "enabled": false,
             "autoreject": false,
             "bin": "cppcheck",
             "arguments": "",
@@ -65,7 +65,7 @@
             ]
         },
         "valgrind": {
-			"enabled": true,
+			"enabled": false,
             "autoreject": false,
             "bin": "valgrind",
 			"arguments": "",
@@ -86,15 +86,26 @@
             ]
         },
         "clang-format": {
-			"enabled": true,
+			"enabled": false,
             "autoreject": false,
             "bin": "clang-format",
-			"arguments": "",
+            "arguments": "",
             "check": {
                 "autoreject": true,
                 "level": "strict",
                 "limit": 5
             }
-        }
+        },
+        "catch2": {
+            "enabled": true,
+            "autoreject": false,
+            "test_path": [
+                "examples/test_example_1.cpp", "examples/test_example_2.cpp"
+            ],
+            "check": {
+                "autoreject": true,
+                "limit": 0
+            }
+       }
     }
 }

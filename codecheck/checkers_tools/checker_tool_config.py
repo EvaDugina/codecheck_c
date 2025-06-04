@@ -55,3 +55,16 @@ class ClangFormatToolConfig(CheckerToolConfig):
         super().__init__(self.config_tool_params, self.config_check_params)
 
 
+class Catch2ToolConfig(CheckerToolConfig):
+
+    config_tool_params: list[Param] = [
+        Param.TEST_PATH
+    ]
+
+    config_check_params: list[Param] = [
+        Param.LIMIT
+    ]
+
+    def __init__(self):
+        super().__init__(self.config_tool_params, self.config_check_params)
+
