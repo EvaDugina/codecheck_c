@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<clang-format-report>
+	<file name="code_example_1.c">
+		<replacement offset="65" length="2"> </replacement>
+		<replacement offset="77" length="1"/>
+		<replacement offset="79" length="0"> </replacement>
+		<replacement offset="107" length="0"> </replacement>
+		<replacement offset="108" length="0"> </replacement>
+		<replacement offset="151" length="6"> </replacement>
+		<replacement offset="216" length="10"> </replacement>
+		<replacement offset="257" length="14"> </replacement>
+		<replacement offset="320" length="14"> </replacement>
+		<replacement offset="338" length="14"> </replacement>
+		<replacement offset="467" length="5"/>
+		<replacement offset="481" length="0"> </replacement>
+		<replacement offset="482" length="3"> </replacement>
+		<replacement offset="486" length="7"> </replacement>
+		<replacement offset="516" length="7"> </replacement>
+		<replacement offset="532" length="3"/>
+	</file>
+</clang-format-report>

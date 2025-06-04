@@ -1,44 +1,64 @@
 ### Документация - https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 Language:        Cpp
 ### BasedOnStyle:  LLVM
-
-AllowShortBlocksOnASingleLine: "Never" ### Циклы в одну строку *
-AllowShortCaseLabelsOnASingleLine: false ### Если true короткие метки регистров будут сокращены до одной строки. *
-AllowShortFunctionsOnASingleLine: InlineOnly ### Короткие функции в одну строку (Несколько режимов) *
-AllowShortIfStatementsOnASingleLine: "Never" ### Некоторые if в одну строку *
-AllowShortLoopsOnASingleLine: false ### While в одну строку *
-
+AccessModifierOffset: -4 ### Дополнительный отступ или отступ модификаторов доступа, например public:.
+AlignAfterOpenBracket: Align ### выравнивает аргументы (несколько режимов)
+AlignConsecutiveAssignments: "None" ### Стиль выравнивания последовательных назначений.
+AlignConsecutiveDeclarations: "None" ### Стиль выравнивания последовательных объявлений.
+AlignOperands:   true ### Если true, горизонтально выровнять операнды двоичных и троичных выражений.
+AlignTrailingComments: true ### Если true, выравнивает конечные комментарии.
+AllowAllParametersOfDeclarationOnNextLine: true ### Если объявление функции не помещается в строку, разрешите поместить все параметры объявления функции в следующую строку
+AllowShortBlocksOnASingleLine: "Never" ### Циклы в одну строку
+AllowShortCaseLabelsOnASingleLine: false ### Если true короткие метки регистров будут сокращены до одной строки.
+AllowShortFunctionsOnASingleLine: All ### Короткие функции в одну строку (Несколько режимов)
+AllowShortIfStatementsOnASingleLine: false ### Некоторые if в одну строку
+AllowShortLoopsOnASingleLine: false ### While в одну строку
+AlwaysBreakTemplateDeclarations: "MultiLine" ### Используемый стиль объявления шаблона. (Несколько режимов)
+BinPackArguments: true ### Если false аргументы вызова функции будут либо все в одной строке, либо будут иметь по одной строке.
+BinPackParameters: true ### Если объявление функции не помещается в строку, разрешите поместить все параметры объявления функции в следующую строку
 BraceWrapping: ### Управление отдельными случаями обертывания скобок.
-  AfterControlStatement: "Never" ### *
-  AfterEnum:       false ### *
-  AfterFunction:   false ### *
-  AfterStruct:     false ### *
-  AfterUnion:      false ### *
-  AfterExternBlock: false ### *
-  BeforeElse:      true ### *
-  IndentBraces:    true ### *
-  SplitEmptyFunction: false ### *
-  SplitEmptyRecord: false ### *
-BreakBeforeBinaryOperators: None ### Способы переноса операторов *
-BreakBeforeBraces: Attach ### Стиль расстановки скобок *
+  AfterClass:      true
+  AfterControlStatement: true
+  AfterEnum:       true
+  AfterFunction:   true
+  AfterNamespace:  true
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  AfterExternBlock: true
+  BeforeCatch:     true
+  BeforeElse:      true
+  IndentBraces:    true
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakBeforeBinaryOperators: None ### Способы переноса операторов
+BreakBeforeBraces: Attach ### Стиль расстановки скобок
 ### NamespaceIndentationKind: "All" ### Отступ, используемый для пространств имен.
-BreakBeforeTernaryOperators: false ### Переносить тернарные операторы *
-BreakConstructorInitializers: BeforeColon ### Используемый стиль инициализаторов конструктора *
-BreakStringLiterals: true ### Разрешить разрыв строковых литералов при форматировании. *
-ColumnLimit:     119  ### Максимальная длина *
-ConstructorInitializerIndentWidth: 4 ### Количество символов, используемых для отступов списков инициализаторов конструктора, а также списков наследования *
-ContinuationIndentWidth: 4 ### Ширина отступа для продолжения строки. *
-IndentCaseLabels: true ### Метки отступов на одном уровне от оператора switch. *
-IndentPPDirectives: None ### Используемый стиль отступа директивы препроцессора. *
-IndentWidth:   4 ### Количество столбцов для отступа. *
-IndentWrappedFunctionNames: false ### Отступ, если определение или объявление функции обернуто после типа. *
-MaxEmptyLinesToKeep: 1 ### Максимальное количество пустых строк. *
-PointerAlignment: Left ### Стиль выравнивания указателя и ссылки. *
-SpaceAfterCStyleCast: false ### Если true после приведения стиля C вставляется пробел. *
-SpaceBeforeAssignmentOperators: true ### Если false, пробелы будут удалены перед операторами присваивания. *
-SpaceBeforeParens: ControlStatements ### Определяет, в каких случаях ставить пробел перед открытием круглых скобок. *
-SpaceInEmptyParentheses: false ### Если true, пробелы могут быть вставлены в (). *
-SpacesInContainerLiterals: false ### Если true пробелы вставляются внутри литералов контейнера. *
-SpacesInCStyleCastParentheses: false ### Если true пробелы могут быть вставлены в приведения стиля C. *
-SpacesInParentheses: false ### Если true, пробелы будут вставлены после (и до ). *
-SpacesInSquareBrackets: false ### Если true, пробелы будут вставлены после [и до ]. *
+BreakBeforeTernaryOperators: true ### Переносить тернарные операторы
+BreakConstructorInitializers: BeforeColon ### Используемый стиль инициализаторов конструктора
+BreakStringLiterals: true ### Разрешить разрыв строковых литералов при форматировании.
+ColumnLimit:     119  ### Максимальная длина
+CompactNamespaces: false ### Если true последовательные объявления пространства имен будут в одной строке. Если false, каждое пространство имен объявляется в новой строке.
+ConstructorInitializerIndentWidth: 4 ### Количество символов, используемых для отступов списков инициализаторов конструктора, а также списков наследования
+ContinuationIndentWidth: 4 ### Ширина отступа для продолжения строки.
+IndentCaseLabels: true ### Метки отступов на одном уровне от оператора switch .
+IndentPPDirectives: None ### Используемый стиль отступа директивы препроцессора.
+IndentWidth:   4 ### Количество столбцов для отступа.
+IndentWrappedFunctionNames: false ### Отступ, если определение или объявление функции обернуто после типа.
+MaxEmptyLinesToKeep: 4 ### Максимальное количество пустых строк
+NamespaceIndentation: All ### Отступ, используемый для пространств имен.
+PointerAlignment: Left ### Стиль выравнивания указателя и ссылки.
+SpaceAfterCStyleCast: false ### Если true после приведения стиля C вставляется пробел.
+SpaceAfterTemplateKeyword: true ### Если true после ключевого слова ‘template’ будет вставлен пробел.
+SpaceBeforeAssignmentOperators: true ### Если false, пробелы будут удалены перед операторами присваивания.
+SpaceBeforeParens: ControlStatements ### Определяет, в каких случаях ставить пробел перед открытием круглых скобок.
+SpaceInEmptyParentheses: true ### Если true, пробелы могут быть вставлены в ().
+SpacesInAngles:  Never ### стиль списков аргументов шаблона.
+SpacesInContainerLiterals: false ### Если true пробелы вставляются внутри литералов контейнера
+SpacesInCStyleCastParentheses: false ### Если true пробелы могут быть вставлены в приведения стиля C.
+SpacesInParentheses: false ### Если true, пробелы будут вставлены после (и до ).
+SpacesInSquareBrackets: false ### Если true, пробелы будут вставлены после [и до ].
+Standard:        c++11 ### Стандарт
+TabWidth:        8 ### Количество столбцов, используемых для остановок табуляции.
+UseTab:          Never ### Способ использования символов табуляции в результирующем файле
