@@ -72,6 +72,5 @@ class Cppcheck(Checker):
             self._tool_result.set_check(check_result)
 
         self._tool_result.set_param(Param.FULL_OUTPUT, result)
-        self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
 
         return

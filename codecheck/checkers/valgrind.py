@@ -72,7 +72,7 @@ class Valgrind(Checker):
 
             custom_flags = [f'./{base_name}']
 
-            output = self._run_command_with_timeout(
+            is_correct, output = self._run_command_with_timeout(
                 custom_flags=custom_flags,
                 result_type=str,
                 is_only_custom_flags=True
@@ -91,11 +91,10 @@ class Valgrind(Checker):
                 check_result = CheckResult(name=check_config.get_name(),
                                            check_params=self._tool_result.get_check_params())
                 check_result.set_param(Param.RESULT, 0)
-                check_result.set_param(Param.OUTCOME, Outcome.UNDEFINED)
+                check_result.set_param(Param.OUTCOME, Outcome.REJECT)
                 self._tool_result.set_check(check_result)
 
             self._tool_result.set_param(Param.FULL_OUTPUT, f"Ошибка! Отсутствует точка входа!")
-            self._tool_result.set_param(Param.OUTCOME, Outcome.FAIL)
 
             return
 
@@ -142,7 +141,6 @@ class Valgrind(Checker):
             full_output += result['output']
 
         self._tool_result.set_param(Param.FULL_OUTPUT, full_output)
-        self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
 
         return
 

@@ -78,6 +78,5 @@ class ClangFormat(Checker):
         formatted_full_output_str = minidom.parseString(full_output_str).toprettyxml(indent="\t")
 
         self._tool_result.set_param(Param.FULL_OUTPUT, str(formatted_full_output_str))
-        self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
 
         return

@@ -24,8 +24,8 @@ int multiplyOdd(int n)
     return 0;
 }
 
-// int main()
-// {
-//     multiplyOdd(123456789);
-//     return 0;
-// }
+ int main()
+ {
+     multiplyOdd(123456789);
+     return 0;
+ }

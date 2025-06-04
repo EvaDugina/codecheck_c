@@ -39,6 +39,4 @@ class Build(Checker):
 
         self._tool_result.set_check(check)
 
-        self._tool_result.set_param(Param.OUTCOME, self._get_outcome_from_checks())
-
         return
