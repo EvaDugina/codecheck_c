@@ -22,19 +22,14 @@ if not CORE_DIR.exists():
     raise RuntimeError(f"Directory '{CORE_DIR}' not found!")
 
 
-setup(name="codecheck",
-      author="Igor Chernousov",
-      author_email="chernousov.id@gmail.com",
-      version="0.0.1",
-      description="Utility for automatic code check with various tools",
-      long_description=readme,
-      long_description_content_type="text/markdown",
-      url="https://vega.fcyb.mirea.ru/gitlab/chernousov/codecheck",
-      packages=find_packages(),  # Находит пакет `codecheck`
+setup(name="c-code-check",
+      author="Igor Chernousov, Ivan Dugin",
+      version="1.0.0",
+      packages=find_packages(),
       include_package_data=True,
       install_requires=[
           # Зависимость на локальный пакет (PEP 508 format)
-          f"codecheck-core @ file://{CORE_DIR.resolve()}",
+          f"code-check-core @ file://{CORE_DIR.resolve()}",
           read_requirements()
       ],
       entry_points={

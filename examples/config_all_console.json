@@ -106,6 +106,16 @@
                 "autoreject": true,
                 "limit": 0
             }
+       },
+        "copydetect": {
+ 			"enabled": true,
+            "autoreject": false,
+            "bin": "copydetect",
+			"arguments": "",
+            "check": {
+                "autoreject": true,
+                "limit": 50
+            }
        }
     }
 }

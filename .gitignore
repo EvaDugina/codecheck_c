@@ -4,7 +4,7 @@ __pycache__
 
 build/
 dist/
-codecheck.egg-info/
+c_code_check.egg-info/
 *autotesting*
 output_*
 *output.json
