@@ -1,7 +1,7 @@
 {
     "tools": {
         "build": {
-            "enabled": false,
+            "enabled": true,
             "autoreject": false,
             "bin": "gcc",
             "check": {
@@ -9,7 +9,7 @@
             }
         },
         "cppcheck": {
-            "enabled": false,
+            "enabled": true,
             "autoreject": false,
             "bin": "cppcheck",
             "arguments": "",
@@ -65,7 +65,7 @@
             ]
         },
         "valgrind": {
-			"enabled": false,
+			"enabled": true,
             "autoreject": false,
             "bin": "valgrind",
 			"arguments": "",
@@ -86,7 +86,7 @@
             ]
         },
         "clang-format": {
-			"enabled": false,
+			"enabled": true,
             "autoreject": false,
             "bin": "clang-format",
             "arguments": "",

@@ -84,7 +84,7 @@ class Valgrind(Checker):
 
     def _update_tool_result_from_output(self, results: list[dict[str, str]]):
 
-        print("_update_tool_result_from_output")
+        # print("_update_tool_result_from_output")
 
         if len(results) == 0:
             for check_config in self._tool_config.get_checks():
