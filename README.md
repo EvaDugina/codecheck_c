@@ -1,10 +1,13 @@
 # codecheck
-### Utility for automatic code check with various tools
+Utility for automatic code check with various tools
+
 ### Supports:
 - valgrind
 - cppcheck
 - clang-format (codestyle)
 - copydetect
+- catch2
+
 ### Install     
 Clone the repository and run command in root directory:
 ```
@@ -19,6 +22,12 @@ codecheck [-h] -c config.json [files ...]
 | -h, --help   | show help message and exit|
 | -c, --conf   | path to JSON configuration file (default: None) |
 | -f, --format | path to clang-format configuration (default: None) |
+
+### Запуск Docker
+docker build -t codecheck .
+docker run -it --rm -v ./:/tmp codecheck
+
+---
 
 ### Примеры корректного вывода программы
 
@@ -49,10 +58,6 @@ CATCH2 checked!
 ====
 время: 28.4 сек
 ```
-
-### Запуск Docker
-docker build -t codecheck .
-docker run -it --rm -v ./:/tmp codecheck
 
 ----
 
