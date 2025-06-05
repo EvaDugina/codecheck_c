@@ -1,4 +1,4 @@
-# codecheck
+# c_code_check
 Utility for automatic code check with various tools
 
 ### Supports:
@@ -15,7 +15,7 @@ pip install .
 ```
 ### Usage
 ```
-codecheck [-h] -c config.json [files ...]
+c_code_check [-h] -c config.json [files ...]
 ```     
 | Argument     | Description |
 | ------------ | ----------- |
@@ -24,15 +24,15 @@ codecheck [-h] -c config.json [files ...]
 | -f, --format | path to clang-format configuration (default: None) |
 
 ### Запуск Docker
-docker build -t codecheck .
-docker run -it --rm -v ./:/tmp codecheck
+docker build -t c_code_check .
+docker run -it --rm -v ./:/tmp c_code_check
 
 ---
 
 ### Примеры корректного вывода программы
 
 ```commandline
-# codecheck
+# c_code_check
 Запуск автоматической проверки...
 BUILD checked!
 CPPCHECK checked!
@@ -46,7 +46,7 @@ CATCH2 checked!
 ```
 
 ```commandline
-# codecheck -c examples/config_all_console.json examples/code_example_1.c     
+# c_code_check -c examples/config_all_console.json examples/code_example_1.c     
 Запуск автоматической проверки...
 BUILD checked!
 CPPCHECK checked!

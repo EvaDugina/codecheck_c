@@ -34,7 +34,7 @@ setup(name="c-code-check",
       ],
       entry_points={
           "console_scripts": [
-              "codecheck = codecheck.__main__:main"  # Точка входа для CLI
+              "c_code_check = codecheck.__main__:main"  # Точка входа для CLI
           ]
       },
       python_requires='>=3.10',  # Указываем минимальную версию Python
