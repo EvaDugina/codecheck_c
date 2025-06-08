@@ -88,7 +88,7 @@ CATCH2 checked!
 ```
 
 ### TOOL (инструмент проверки)
-<tool>: build / cppcheck / valgrind / clang-format / catch2 / copydetect
+```<tool>```: build / cppcheck / valgrind / clang-format / catch2 / copydetect
 
 ##### in config
 ```python
