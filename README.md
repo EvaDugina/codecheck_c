@@ -63,7 +63,8 @@ COPYDETECT checked!
 ====
 время: 33.8 сек
 ```
-----
+
+---
 
 # API
 
@@ -141,19 +142,6 @@ COPYDETECT checked!
     # ВАРИАТИВНЫЕ АРГУМЕНТЫ
     "error": int, # значения (для Catch2): Количество ошибок выполнения
     "failed": int # значения (для Catch2): Количество проваленных тестов
-}
-```
-
-### OUTCOME
-outcome: pass / fail / reject / skip / undefined
-
-```python
-{
-    "outcome": "pass",      # проверка пройдена
-    "outcome": "fail",      # провеока не пройдена
-    "outcome": "reject",    # проверка отклонена из-за предыдщуей ошибки
-    "outcome": "skip",      # проверка пропущена (не включена)
-    "outcome": "undefined", # произошла неизвестная ошибка
 }
 ```
 
