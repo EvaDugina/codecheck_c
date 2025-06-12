@@ -1,0 +1,20 @@
+/code_example_3.c:1:10: error: expected "FILENAME" or <FILENAME> [clang-diagnostic-error]
+#include AVASVAvAVBvvAVAV<stdio.h>
+         ^
+/code_example_3.c:2:2: error: invalid preprocessing directive [clang-diagnostic-error]
+#inclusdVESBSbsBSBBVSBAe <stdlib.h>
+ ^
+/code_example_3.c:3:1: warning: type specifier missing, defaults to 'int' [clang-diagnostic-implicit-int]
+vdsavasvA;
+^
+/code_example_3.c:4:1: error: unknown type name 'MSA' [clang-diagnostic-error]
+MSA'vmeaVa'
+^
+/code_example_3.c:4:4: error: expected identifier or '(' [clang-diagnostic-error]
+MSA'vmeaVa'
+   ^
+/code_example_3.c:29:3: error: use of undeclared identifier 'ssbas' [clang-diagnostic-error]
+ {ssbas
+  ^
+
+
