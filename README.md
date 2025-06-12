@@ -26,7 +26,7 @@ c_code_check [-h] -c config.json [files ...]
 ### Запуск Docker
 ```bash
 docker build -t c_code_check .
-docker run -it --rm -v ./:/tmp c_code_check
+docker run -it --rm -v .:/tmp c_code_check
 ```
 
 ---

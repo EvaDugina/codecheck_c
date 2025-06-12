@@ -26,6 +26,12 @@ setup(name="c-code-check",
       author="Igor Chernousov, Ivan Dugin",
       version="1.0.0",
       packages=find_packages(),
+
+      # включение конфигурационных файлов
+      package_data={
+          'config_data_package': ['*'],
+      },
+
       include_package_data=True,
       install_requires=[
           # Зависимость на локальный пакет (PEP 508 format)

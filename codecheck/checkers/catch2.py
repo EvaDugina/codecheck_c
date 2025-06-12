@@ -1,6 +1,7 @@
 import os
 import re
 import xml.etree.ElementTree as ET
+from importlib.resources import files
 
 from codecheck_core import Checker
 from codecheck_core import CheckResult
@@ -26,7 +27,8 @@ class Catch2(Checker):
 
     def _run(self):
 
-        self.copy_to_test_folder('for_testing/catch2.hpp', 'catch2.hpp')
+        catch2_path = str(files('config_data_package').joinpath('catch2.hpp'))
+        self.copy_to_test_folder(catch2_path, 'catch2.hpp')
 
         # files_with_main = []
 

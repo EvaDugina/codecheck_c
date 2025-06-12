@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from importlib.resources import files
 from xml.dom import minidom
 
 from codecheck_core import Checker
@@ -25,7 +26,8 @@ class ClangFormat(Checker):
 
     def _run(self) -> list[ET.Element]:
 
-        self.copy_to_test_folder('for_testing/.clang-format', '.clang-format')
+        clang_format_path = str(files('config_data_package').joinpath('clang-format'))
+        self.copy_to_test_folder(clang_format_path, '.clang-format')
 
         outputs: list = []
 
