@@ -55,6 +55,20 @@ class ClangFormatToolConfig(CheckerToolConfig):
         super().__init__(self.config_tool_params, self.config_check_params)
 
 
+class ClangTidyToolConfig(CheckerToolConfig):
+
+    config_tool_params: list[Param] = [
+        Param.ENABLE_ERROR_CODES
+    ]
+
+    config_check_params: list[Param] = [
+        Param.TEMPLATE, Param.LIMIT
+    ]
+
+    def __init__(self):
+        super().__init__(self.config_tool_params, self.config_check_params)
+
+
 class Catch2ToolConfig(CheckerToolConfig):
 
     config_tool_params: list[Param] = [

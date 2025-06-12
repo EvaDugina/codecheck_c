@@ -6,14 +6,16 @@ from .tools_config import TOOLS_CHECKERS
 
 def main():
 
-    parser = argparse.ArgumentParser(prog="codecheck",
+    parser = argparse.ArgumentParser(prog="c_code_check",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("files", metavar="files", nargs="+",
                     help="paths to test files to check")
     parser.add_argument("-c", "--conf", metavar="config.json",
                         help="path to JSON configuration file", required=True)
-    parser.add_argument("-f", "--format", metavar=".clang-format",
-                        help="path to clang-format configuration")
+    # parser.add_argument("-cf", "--clang-format", metavar=".clang-format",
+    #                     help="path to clang-format configuration")
+    # parser.add_argument("-ct", "--clang-tidy", metavar=".clang-tidy",
+    #                     help="path to clang-tidy configuration")
     args = parser.parse_args()
 
     if not args.conf:
@@ -38,8 +40,8 @@ def main():
     # config = {
     #     "config_json": 'examples/config_all_console.json',
     #     "files_to_check": [
-    #         "examples/code_example_1.c", #"examples/code_example_2.c",
-    #         #"examples/code_example_3.c", "examples/code_example_4.c"
+    #         "examples/code_example_1.c", "examples/code_example_2.c",
+    #         "examples/code_example_3.c", "examples/code_example_4.c"
     #     ],
     # }
 

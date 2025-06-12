@@ -1,10 +1,5 @@
-import os
 from pathlib import Path
 from setuptools import setup, find_packages
-
-
-with open("README.md", "r") as readme_fp:
-    readme = readme_fp.read()
 
 
 def read_requirements():

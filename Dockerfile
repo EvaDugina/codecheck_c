@@ -4,7 +4,7 @@ FROM python:3.11-slim
 # Установка системных зависимостей
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    g++ clang-format valgrind cppcheck
+    g++ clang clang-format clang-tidy valgrind cppcheck
     # locales \
     # && rm -rf /var/lib/apt/lists/*
 

@@ -4,7 +4,8 @@ Utility for automatic code check with various tools
 ### Supports:
 - valgrind
 - cppcheck
-- clang-format (codestyle)
+- clang-format
+- clang-tidy
 - copydetect
 - catch2
 
@@ -38,27 +39,29 @@ docker run -it --rm -v .:/tmp c_code_check
 Запуск автоматической проверки...
 BUILD checked!
 CPPCHECK checked!
-CLANG-FORMAT checked!
 VALGRIND checked!
-COPYDETECT checked!
+CLANG-FORMAT checked!
+CLANG-TIDY checked!
 CATCH2 checked!
+COPYDETECT checked!
 Автоматичекая проверка завершена!
 ====
-время: 28.0 сек
+время: 29.2 сек
 ```
 
 ```bash
-# c_code_check -c examples/config_all_console.json examples/code_example_1.c     
+# c_code_check -c examples/config_all_console.json examples/code_example_1.c examples/code_example_2.c
 Запуск автоматической проверки...
 BUILD checked!
 CPPCHECK checked!
-CLANG-FORMAT checked!
-COPYDETECT checked!
 VALGRIND checked!
+CLANG-FORMAT checked!
+CLANG-TIDY checked!
 CATCH2 checked!
+COPYDETECT checked!
 Автоматичекая проверка завершена!
 ====
-время: 28.4 сек
+время: 33.8 сек
 ```
 ----
 

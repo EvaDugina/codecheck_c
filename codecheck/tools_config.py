@@ -1,11 +1,12 @@
 from .checkers.build import Build
 from .checkers.catch2 import Catch2
 from .checkers.clang_format import ClangFormat
+from .checkers.clang_tidy import ClangTidy
 from .checkers.cppcheck import Cppcheck
 from .checkers_tools.checker_tool_config import BuildToolConfig, CppcheckToolConfig, ValgrindToolConfig, \
-    ClangFormatToolConfig, Catch2ToolConfig
+    ClangFormatToolConfig, ClangTidyToolConfig, Catch2ToolConfig
 from .checkers_tools.checker_tool_result import BuildToolResult, CppcheckToolResult, ValgrindToolResult, \
-    ClangFormatToolResult, Catch2ToolResult
+    ClangFormatToolResult,ClangTidyToolResult, Catch2ToolResult
 from .checkers.valgrind import Valgrind
 
 TOOLS_CHECKERS = {
@@ -28,6 +29,11 @@ TOOLS_CHECKERS = {
         "checker": ClangFormat,
         "config_checker_tool": ClangFormatToolConfig,
         "result_checker_tool": ClangFormatToolResult
+    },
+    "clang-tidy": {
+        "checker": ClangTidy,
+        "config_checker_tool": ClangTidyToolConfig,
+        "result_checker_tool": ClangTidyToolResult
     },
     "catch2": {
         "checker": Catch2,

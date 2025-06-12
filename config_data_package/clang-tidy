@@ -1,0 +1,11 @@
+Checks: >
+    -*,                       # Отключить все проверки по умолчанию
+    clang-analyzer-*,         # Включить статический анализ
+    readability-*,            # Проверки читаемости кода
+    modernize-*,              # Современные практики C++
+    -readability-magic-numbers # Пример исключения конкретной проверки
+
+WarningsAsErrors: true        # Трактовать предупреждения как ошибки
+HeaderFilterRegex: '.*'       # Применять ко всем заголовкам
+AnalyzeTemporaryDtors: true   # Включить дополнительные проверки
+FormatStyle: file             # Использовать стиль из .clang-format

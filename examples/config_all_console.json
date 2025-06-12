@@ -96,6 +96,17 @@
                 "limit": 5
             }
         },
+        "clang-tidy": {
+			"enabled": true,
+            "autoreject": false,
+            "bin": "clang-tidy",
+            "arguments": "-std=c11 -Wall -Wextra",
+            "enable_error_codes": [],
+            "check": {
+                "autoreject": true,
+                "limit": 5
+            }
+        },
         "catch2": {
             "enabled": true,
             "autoreject": false,
