@@ -1,4 +1,4 @@
 codecheck/* linguist-detectable
-examples/* linguist-vendored
-guidelines/* linguist-vendored
-config_data_package/* linguist-vendored
+examples/* -linguist-detectable
+guidelines/* -linguist-detectable
+config_data_package/* -linguist-detectable
